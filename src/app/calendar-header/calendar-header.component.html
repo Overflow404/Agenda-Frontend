@@ -1,0 +1,6 @@
+<mat-toolbar>
+  <span class="title-center">My Application</span>
+  <button mat-button color="primary" (click)="previous()">Previous</button>
+  <button mat-button color="primary" (click)="next()">Next</button>
+  <input matInput ngModel="{{dateNow.getDate() + '/' + (dateNow.getMonth() + 1) + '/' + dateNow.getFullYear()}}" placeholder="Current date">
+</mat-toolbar>
