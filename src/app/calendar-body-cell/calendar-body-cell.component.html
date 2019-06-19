@@ -1,9 +1,8 @@
-<mat-card tabindex="-1">
-  <mat-card-header>
+<mat-card (dblclick)="doubleClickCallback()" tabindex="1">
+  <mat-card-header class="child">
     <mat-card-title [textContent]="date.getDate()" class="card-container-left"></mat-card-title>
     <mat-card-subtitle [textContent]="getWeekDayFromNumber(date.getDay())" class="card-container-right"></mat-card-subtitle>
   </mat-card-header>
-
 </mat-card>
 
 
