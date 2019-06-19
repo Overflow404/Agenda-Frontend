@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {DataService} from '../data.service';
 import {DateManager} from '../date/DateManager';
 
@@ -10,25 +10,27 @@ import {DateManager} from '../date/DateManager';
 
 @Injectable()
 export class CalendarHeaderComponent implements OnInit {
-  dateNow: Date;
-  test: Date;
+
+  private currentDate: Date;
+
   constructor(private data: DataService,
               private dateManager: DateManager) { }
 
   ngOnInit() {
-    this.data.currentDate.subscribe(date => {
-      this.dateNow = date;
-      this.test = date;
-    });
+    this.subscribeOnMonthChange();
   }
 
-  previous() {
+  private previousMonth() {
     const date = this.data.getData();
-    this.data.changeDate(this.dateManager.previousMonth(date));
+    this.data.changeDate(DateManager.previousMonth(date));
   }
 
-  next() {
+  private nextMonth() {
     const date = this.data.getData();
-    this.data.changeDate(this.dateManager.nextMonth(date));
+    this.data.changeDate(DateManager.nextMonth(date));
+  }
+
+  private subscribeOnMonthChange() {
+    this.data.currentDate.subscribe(date => { this.currentDate = date; });
   }
 }

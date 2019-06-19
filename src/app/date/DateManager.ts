@@ -6,55 +6,55 @@ import { Injectable } from '@angular/core';
 
 export class DateManager {
 
-  weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  private weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  private months = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
 
-  getFirstDayOfMonth(date: Date) {
-    return new Date(date.getFullYear(), date.getMonth(), 1);
+
+  static createDate(year: number, month: number, day: number, hour: number, minute: number) {
+    return new Date(year, month, day, hour, minute);
   }
 
-  getLastDayOfMonth(date: Date) {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
-  }
-
-  nextMonth(date: Date) {
-    date.setDate(1);
-    date.setMonth(date.getMonth() + 1);
-    return date;
-  }
-
-  previousMonth(date: Date) {
-    date.setDate(1);
-    date.setMonth(date.getMonth() - 1);
-    return date;
-  }
-
-  getWeekdayNameByDay(day: number) {
-    return this.weekday[day];
-  }
-
-  daysToMonday(firstDayOfMonth: Date) {
-    if (firstDayOfMonth.getDay() !== 1) {
-      return firstDayOfMonth.getDay() - 1;
-    }
-    return 0;
-  }
-
-  daysToSunday(lastDayOfMonth: Date) {
+  static daysToSunday(lastDayOfMonth: Date) {
     if (lastDayOfMonth.getDay() !== 0) {
       return 7 - lastDayOfMonth.getDay();
     }
     return 0;
   }
 
+  static firstDayOfMonth(date: Date) {
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+
+  static lastDayOfMonth(date: Date) {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  }
+
+  static nextMonth(date: Date) {
+    date.setDate(1);
+    date.setMonth(date.getMonth() + 1);
+    return date;
+  }
+
+  static previousMonth(date: Date) {
+    date.setDate(1);
+    date.setMonth(date.getMonth() - 1);
+    return date;
+  }
+
+  static daysToMonday(firstDayOfMonth: Date) {
+    if (firstDayOfMonth.getDay() !== 1) {
+      return firstDayOfMonth.getDay() - 1;
+    }
+    return 0;
+  }
+
+  getWeekDayFromNumber(day: number) {
+    return this.weekday[day];
+  }
+
   getMonthName(month: number) {
     return this.months[month];
   }
 
-  mergeDatesToJSON(fullStartDate: Date, fullEndDate: Date) {
-    const startInterval = JSON.stringify(fullStartDate);
-    const endInterval = JSON.stringify(fullEndDate);
-    return ((startInterval + endInterval).replace(/['"]+/g, ''));
-
-  }
 }

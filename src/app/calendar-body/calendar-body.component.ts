@@ -9,36 +9,47 @@ import {DataService} from '../data.service';
 })
 export class CalendarBodyComponent implements OnInit {
 
-  @Input() dateNow: Date;
-  dates: Date[];
+  @Input() private currentDate: Date;
+  private dates: Date[];
 
   constructor(private dateManager: DateManager,
               private data: DataService) {
   }
 
   ngOnInit() {
+    this.subscribeOnViewChange();
+  }
+
+  private subscribeOnViewChange() {
     this.data.currentDate.subscribe(date => {
-      this.clearCalendar(date);
-
-      const firstDayOfMonth = this.dateManager.getFirstDayOfMonth(this.dateNow);
-      const daysToMonday = this.dateManager.daysToMonday(firstDayOfMonth);
-
-      const lastDayOfMonth = this.dateManager.getLastDayOfMonth(this.dateNow);
-      const daysToSunday = this.dateManager.daysToSunday(lastDayOfMonth);
-
-      const currentMonth = this.dateNow.getMonth();
-      const currentYear = this.dateNow.getFullYear();
-
-      for (let currentDay = firstDayOfMonth.getDate() - daysToMonday;
-           currentDay <= lastDayOfMonth.getDate() + daysToSunday; currentDay++) {
-        this.dates.push(new Date(currentYear, currentMonth, currentDay));
-      }
+      this.clearAgenda();
+      this.setAgendaDate(date);
+      this.fillAgenda();
     });
   }
 
-  clearCalendar(date: Date) {
+  private clearAgenda() {
     this.dates = [];
-    this.dateNow = date;
   }
 
+  private setAgendaDate(date: Date) {
+    this.currentDate = date;
+  }
+
+  private fillAgenda() {
+    const firstDayOfMonth = DateManager.firstDayOfMonth(this.currentDate);
+    const daysToMonday = DateManager.daysToMonday(firstDayOfMonth);
+    const startDay = firstDayOfMonth.getDate() - daysToMonday;
+
+    const lastDayOfMonth = DateManager.lastDayOfMonth(this.currentDate);
+    const daysToSunday = DateManager.daysToSunday(lastDayOfMonth);
+    const lastDay = lastDayOfMonth.getDate() + daysToSunday;
+
+    const month = this.currentDate.getMonth();
+    const year = this.currentDate.getFullYear();
+
+    for (let day = startDay; day <= lastDay; day++) {
+      this.dates.push(new Date(year, month, day));
+    }
+  }
 }

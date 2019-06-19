@@ -8,29 +8,26 @@ import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/cale
   templateUrl: './calendar-body-cell.component.html',
   styleUrls: ['./calendar-body-cell.component.css']
 })
+
 export class CalendarBodyCellComponent implements OnInit {
 
-  @Input() date: Date;
+  @Input() private currentDate: Date;
+  @Input() private enabled: boolean;
 
   constructor(private dateManager: DateManager,
               public dialog: MatDialog) {
   }
 
   ngOnInit() {
-
   }
 
-  getWeekDayFromNumber(day: number) {
-    return this.dateManager.getWeekdayNameByDay(day);
-  }
-
-  doubleClickCallback() {
+  private doubleClickCallback() {
     const dialogRef = this.dialog.open(CalendarBodyCellDialogComponent);
     const instance = dialogRef.componentInstance;
-    instance.date = this.date;
+    instance.currentDate = this.currentDate;
 
-    dialogRef.afterClosed().subscribe(result => {
-      /*alert('Closed');*/
+    dialogRef.afterClosed().subscribe(() => {
+      /*alert('[CELL] Dialog closed');*/
     });
   }
 }

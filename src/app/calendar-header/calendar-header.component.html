@@ -1,6 +1,7 @@
 <mat-toolbar color="primary">
-  <button mat-button (click)="previous()">Previous</button>
-  <button mat-button (click)="next()">Next</button>
+  <button mat-button (click)="previousMonth()">Previous</button>
+  <button mat-button (click)="nextMonth()">Next</button>
   <span class="fill-remaining-space"></span>
-  <span>{{(dateManager.getMonthName(dateNow.getMonth())) + ', ' + dateNow.getFullYear()}}</span>
+  <span>
+    {{ (dateManager.getMonthName(currentDate.getMonth())) + ', ' + currentDate.getFullYear() }}</span>
 </mat-toolbar>

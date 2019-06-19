@@ -6,9 +6,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./calendar.component.css'],
 })
 
-
 export class CalendarComponent implements OnInit {
-  dateNow: Date;
+  private dateNow: Date;
 
   constructor() {
     this.dateNow = new Date(Date.now());

@@ -1,50 +1,53 @@
-<h2 mat-dialog-title>Manage bookings for {{date.getDate() + ' ' + dateManager.getMonthName(date.getMonth())}}</h2>
+<h2 mat-dialog-title>Manage bookings for
+  {{ currentDate.getDate() + ' ' + dateManager.getMonthName(currentDate.getMonth()) }}
+</h2>
 
 <mat-dialog-content>
-  <mat-label>New Bookings</mat-label>
-  <br>
+  <p>
+    <mat-form-field class="full-width">
+      <label>
+        <input [(ngModel)]="subject" matInput placeholder="Subject" required>
+      </label>
+    </mat-form-field>
+  </p>
 
-  <br>
-  <mat-form-field class="full-width">
-    <input [(ngModel)]="subject" matInput placeholder="Subject" required #subjectName="ngModel">
-  </mat-form-field>
+  <p>
+    <mat-label>All day&nbsp;&nbsp;&nbsp;</mat-label>
+    <mat-slide-toggle (change)="onSlideChange()" color="primary"></mat-slide-toggle>
+  </p>
 
-  <div *ngIf="subjectName.invalid && (subjectName.dirty || subjectName.touched)">
-    <div *ngIf="subjectName.errors.required">Subject is required!</div>
-  </div><br>
+  <p>
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <label>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"></textarea>
+      </label>
+    </mat-form-field>
+  </p>
 
-  <mat-label>All day&nbsp;&nbsp;&nbsp;</mat-label>
-  <mat-slide-toggle (change)="onSlideChange()" color="primary"></mat-slide-toggle>
-  <br>
+  <p>
+    <mat-form-field class="full-width">
+      <label>
+        <input [disabled]="disableTimePicker" matInput placeholder="Start date"
+               [ngxTimepicker]="startTime" [format]="24" required>
+      </label>
+      <ngx-material-timepicker (timeSet)="onStartDateSelected(startTime)" #startTime></ngx-material-timepicker>
+    </mat-form-field>
+  </p>
 
-  <br>
-  <mat-form-field class="full-width">
-    <mat-label>Description</mat-label>
-    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input [(ngModel)]="startDate" [disabled]="disableDatePickers" matInput placeholder="Start date"
-           [ngxTimepicker]="startTime" [format]="24" readonly #startDateId="ngModel" required>
-    <ngx-material-timepicker (timeSet)="onStartDateSelected(startTime)" #startTime></ngx-material-timepicker>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input [(ngModel)]="endDate" [disabled]="disableDatePickers" matInput placeholder="End date"
-           [ngxTimepicker]="endTime" [format]="24" readonly #endDateId="ngModel" required>
-    <ngx-material-timepicker (timeSet)="onEndDateSelected(endTime)" #endTime></ngx-material-timepicker>
-  </mat-form-field>
-
-  <div *ngIf="startDateId.invalid && (startDateId.dirty || startDateId.touched)">
-    <div *ngIf="startDateId.errors.required">Start date is required!</div>
-  </div>
-  <div *ngIf="endDateId.invalid && (endDateId.dirty || endDateId.touched)">
-    <div *ngIf="endDateId.errors.required">End date is required!</div>
-  </div>
-
+  <p>
+    <mat-form-field class="full-width">
+      <label>
+        <input [disabled]="disableTimePicker" matInput placeholder="End date"
+               [ngxTimepicker]="endTime" [format]="24" required>
+      </label>
+      <ngx-material-timepicker (timeSet)="onEndDateSelected(endTime)" #endTime></ngx-material-timepicker>
+    </mat-form-field>
+  </p>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+
+<mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button (click)="book()">Book</button>
 </mat-dialog-actions>
