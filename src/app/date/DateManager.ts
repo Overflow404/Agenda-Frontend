@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class DateManager {
 
   weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   getFirstDayOfMonth(date: Date) {
     return new Date(date.getFullYear(), date.getMonth(), 1);
@@ -37,7 +38,6 @@ export class DateManager {
       return firstDayOfMonth.getDay() - 1;
     }
     return 0;
-
   }
 
   daysToSunday(lastDayOfMonth: Date) {
@@ -45,6 +45,9 @@ export class DateManager {
       return 7 - lastDayOfMonth.getDay();
     }
     return 0;
+  }
 
+  getMonthName(month: number) {
+    return this.months[month];
   }
 }
