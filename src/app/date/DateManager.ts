@@ -50,4 +50,11 @@ export class DateManager {
   getMonthName(month: number) {
     return this.months[month];
   }
+
+  mergeDatesToJSON(fullStartDate: Date, fullEndDate: Date) {
+    const startInterval = JSON.stringify(fullStartDate);
+    const endInterval = JSON.stringify(fullEndDate);
+    return ((startInterval + endInterval).replace(/['"]+/g, ''));
+
+  }
 }

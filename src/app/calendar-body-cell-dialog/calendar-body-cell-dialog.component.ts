@@ -1,7 +1,8 @@
 import {Component,  OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
 import {NgxMaterialTimepickerComponent} from 'ngx-material-timepicker';
-
+import {HttpClient} from '@angular/common/http';
+import {Dates} from '../dates';
 @Component({
   selector: 'app-calendar-body-cell-dialog',
   templateUrl: './calendar-body-cell-dialog.component.html',
@@ -10,12 +11,15 @@ import {NgxMaterialTimepickerComponent} from 'ngx-material-timepicker';
 export class CalendarBodyCellDialogComponent implements OnInit {
 
   date: Date;
+  fullStartDate: Date;
+  fullEndDate: Date;
   disableDatePickers = false;
   subject: string;
-  startDate: string;
-  endDate: string;
-
-  constructor(private dateManager: DateManager) { }
+  startDate: Date;
+  endDate: Date;
+  url = 'http://localhost:3000/dates/';
+  constructor(private dateManager: DateManager,
+              private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -25,13 +29,32 @@ export class CalendarBodyCellDialogComponent implements OnInit {
   }
 
   onStartDateSelected(startTime: NgxMaterialTimepickerComponent) {
-    const startDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(),
+    this.startDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(),
       startTime.selectedHour.time, startTime.selectedMinute.time);
-    alert(startDate.toJSON());
+    this.fullStartDate = this.startDate;
   }
 
   onEndDateSelected(endTime: NgxMaterialTimepickerComponent) {
-    const endDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(),
+    this.endDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(),
       endTime.selectedHour.time, endTime.selectedMinute.time);
+    this.fullEndDate = this.endDate;
   }
+
+  book() {
+    const key = this.dateManager.mergeDatesToJSON(this.fullStartDate, this.fullEndDate);
+    this.getDates(key).subscribe((next: Dates[]) => {
+      next.forEach((data: Dates) => {
+        alert(data.id);
+      }, () => {
+        alert(('error'));
+      });
+    });
+  }
+
+  getDates(date: string) {
+    return this.http.get(this.url + date);
+  }
+
+
+
 }

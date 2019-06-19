@@ -21,6 +21,7 @@ import {FormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatDialogModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    HttpClientModule,
   ],
   entryComponents: [
     CalendarBodyCellDialogComponent
