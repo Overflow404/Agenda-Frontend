@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Manage bookings for {{date.getDate() + ' ' + dateManager
+  .getMonthName(date.getMonth())}}</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-label>New Bookings</mat-label><br>
+
+  <br><mat-form-field class="full-width">
+    <input matInput placeholder="Subject">
+  </mat-form-field>
+
+  <br><mat-label>All day </mat-label>
+  <mat-slide-toggle (change)="onSlideChange()" color="primary"></mat-slide-toggle><br>
+
+  <br><mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="5"></textarea>
+  </mat-form-field>
+
+  <mat-form-field >
+    <input [disabled]="disableDatePickers" matInput placeholder="Start date" [ngxTimepicker]="startTime" [format]="24"  readonly>
+    <ngx-material-timepicker #startTime></ngx-material-timepicker>
+  </mat-form-field>
+
+
+  <mat-form-field >
+    <input [disabled]="disableDatePickers" matInput placeholder="End date" [ngxTimepicker]="endTime" [format]="24"  readonly>
+    <ngx-material-timepicker #endTime></ngx-material-timepicker>
+  </mat-form-field>
+
+  <br><br>
+
+  <mat-label>Your Bookings</mat-label>
+  <p>Achieve the maximum speed possible on the Web Platform today, and take it further, via Web
+    Workers and server-side rendering. Angular puts you in control over scalability. Meet huge
+    data requirements by building data models on RxJS, Immutable.js or another push-model.</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button>Book</button>
+</mat-dialog-actions>
