@@ -1,40 +1,47 @@
-<h2 mat-dialog-title>Manage bookings for {{date.getDate() + ' ' + dateManager
-  .getMonthName(date.getMonth())}}</h2>
-<mat-dialog-content class="mat-typography">
-  <mat-label>New Bookings</mat-label><br>
+<h2 mat-dialog-title>Manage bookings for {{date.getDate() + ' ' + dateManager.getMonthName(date.getMonth())}}</h2>
 
-  <br><mat-form-field class="full-width">
-    <input matInput placeholder="Subject">
+<mat-dialog-content>
+  <mat-label>New Bookings</mat-label>
+  <br>
+
+  <br>
+  <mat-form-field class="full-width">
+    <input [(ngModel)]="subject" matInput placeholder="Subject" required #subjectName="ngModel">
   </mat-form-field>
 
-  <br><mat-label>All day </mat-label>
-  <mat-slide-toggle (change)="onSlideChange()" color="primary"></mat-slide-toggle><br>
+  <div *ngIf="subjectName.invalid && (subjectName.dirty || subjectName.touched)">
+    <div *ngIf="subjectName.errors.required">Subject is required!</div>
+  </div><br>
 
-  <br><mat-form-field class="full-width">
+  <mat-label>All day&nbsp;&nbsp;&nbsp;</mat-label>
+  <mat-slide-toggle (change)="onSlideChange()" color="primary"></mat-slide-toggle>
+  <br>
+
+  <br>
+  <mat-form-field class="full-width">
     <mat-label>Description</mat-label>
-    <textarea matInput
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="5"></textarea>
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
   </mat-form-field>
 
-  <mat-form-field >
-    <input [disabled]="disableDatePickers" matInput placeholder="Start date" [ngxTimepicker]="startTime" [format]="24"  readonly>
-    <ngx-material-timepicker #startTime></ngx-material-timepicker>
+  <mat-form-field>
+    <input [(ngModel)]="startDate" [disabled]="disableDatePickers" matInput placeholder="Start date"
+           [ngxTimepicker]="startTime" [format]="24" readonly #startDateId="ngModel" required>
+    <ngx-material-timepicker (timeSet)="onStartDateSelected(startTime)" #startTime></ngx-material-timepicker>
   </mat-form-field>
 
-
-  <mat-form-field >
-    <input [disabled]="disableDatePickers" matInput placeholder="End date" [ngxTimepicker]="endTime" [format]="24"  readonly>
-    <ngx-material-timepicker #endTime></ngx-material-timepicker>
+  <mat-form-field>
+    <input [(ngModel)]="endDate" [disabled]="disableDatePickers" matInput placeholder="End date"
+           [ngxTimepicker]="endTime" [format]="24" readonly #endDateId="ngModel" required>
+    <ngx-material-timepicker (timeSet)="onEndDateSelected(endTime)" #endTime></ngx-material-timepicker>
   </mat-form-field>
 
-  <br><br>
+  <div *ngIf="startDateId.invalid && (startDateId.dirty || startDateId.touched)">
+    <div *ngIf="startDateId.errors.required">Start date is required!</div>
+  </div>
+  <div *ngIf="endDateId.invalid && (endDateId.dirty || endDateId.touched)">
+    <div *ngIf="endDateId.errors.required">End date is required!</div>
+  </div>
 
-  <mat-label>Your Bookings</mat-label>
-  <p>Achieve the maximum speed possible on the Web Platform today, and take it further, via Web
-    Workers and server-side rendering. Angular puts you in control over scalability. Meet huge
-    data requirements by building data models on RxJS, Immutable.js or another push-model.</p>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
