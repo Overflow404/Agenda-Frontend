@@ -7,10 +7,20 @@ import { CalendarHeaderComponent } from './calendar-header/calendar-header.compo
 import { CalendarBodyComponent } from './calendar-body/calendar-body.component';
 import { CalendarTrailerComponent } from './calendar-trailer/calendar-trailer.component';
 import { CalendarBodyCellComponent } from './calendar-body-cell/calendar-body-cell.component';
-import {MatButtonModule, MatCardModule, MatGridListModule, MatInputModule, MatToolbarModule} from '@angular/material/';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSlideToggleModule,
+  MatToolbarModule
+} from '@angular/material/';
 import {DataService} from './data.service';
 import {FormsModule} from '@angular/forms';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +28,8 @@ import {FormsModule} from '@angular/forms';
     CalendarHeaderComponent,
     CalendarBodyComponent,
     CalendarTrailerComponent,
-    CalendarBodyCellComponent
+    CalendarBodyCellComponent,
+    CalendarBodyCellDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +38,14 @@ import {FormsModule} from '@angular/forms';
     MatCardModule,
     MatToolbarModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    NgxMaterialTimepickerModule
+  ],
+  entryComponents: [
+    CalendarBodyCellDialogComponent
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

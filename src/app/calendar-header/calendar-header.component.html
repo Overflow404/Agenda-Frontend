@@ -1,6 +1,6 @@
-<mat-toolbar color="warn">
-  <img src="/avatar.png" alt="Avatar" class="avatar">
-  <span class="title-center">{{dateNow | date: 'd MMMM, y'}}</span>
+<mat-toolbar color="primary">
   <button mat-button (click)="previous()">Previous</button>
   <button mat-button (click)="next()">Next</button>
+  <span class="fill-remaining-space"></span>
+  <span>{{(dateManager.getMonthName(dateNow.getMonth())) + ', ' + dateNow.getFullYear()}}</span>
 </mat-toolbar>
