@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DateErrorMatcher} from '../error/DateErrorMatcher';
-import {Booking} from '../model/Booking';
+import {BookingService} from '../service/BookingService';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',
@@ -11,7 +11,7 @@ import {Booking} from '../model/Booking';
 })
 export class CalendarBodyCellDialogComponent implements OnInit {
 
-  /*Can't be private because in calendar-body-cell.component.ts there's
+  /* Can't be private because in calendar-body-cell.component.ts there's
   * an access with instance.currentDate. */
   currentDate: Date;
 
@@ -24,7 +24,8 @@ export class CalendarBodyCellDialogComponent implements OnInit {
 
   private matcher;
 
-  constructor(private dateManager: DateManager) {
+  constructor(private dateManager: DateManager,
+              private bookingService: BookingService) {
     this.matcher = new DateErrorMatcher();
   }
 
@@ -37,12 +38,16 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     const startTimeParts = startTime.split(':');
     const endTimeParts = endTime.split(':');
 
-    const startDate = new Date(new Date(this.currentDate).setHours(startTimeParts[0], startTimeParts[1]));
-    const endDate = new Date(new Date(this.currentDate).setHours(endTimeParts[0], endTimeParts[1]));
-    alert(subject);
-    /* Why if booking is a const, then stringify doesn't work?
-    * Think cause it's a const and when reassign e.g. description it doesn't work*/
-    let booking = new Booking(subject, description, startDate, endDate);
-    alert(JSON.stringify(booking));
+    const startDate = new Date(this.currentDate).setHours(startTimeParts[0], startTimeParts[1]);
+    const endDate = new Date(this.currentDate).setHours(endTimeParts[0], endTimeParts[1]);
+
+    /* TODO Why if booking is a const, then stringify doesn't work?
+    * TODO Think cause it's a const and when reassign e.g. description it doesn't work*/
+    /*let booking = new Booking(subject, description, startDate, endDate);
+    alert(JSON.stringify(booking));*/
+/*    alert(this.bookingService.checkIfSlotIsFree(startDate, endDate));*/
+    const observable = this.bookingService.checkIfSlotIsFree(startDate, endDate);
+    observable
+      .subscribe(() => alert('fatta'));
   }
 }

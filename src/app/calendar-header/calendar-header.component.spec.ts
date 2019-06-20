@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalendarHeaderComponent } from './calendar-header.component';
+import {MatToolbar} from '@angular/material';
+import {DataService} from '../data.service';
 
 describe('CalendarHeaderComponent', () => {
   let component: CalendarHeaderComponent;
@@ -8,7 +10,9 @@ describe('CalendarHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarHeaderComponent ]
+      declarations: [ CalendarHeaderComponent,
+      MatToolbar],
+      providers: [DataService]
     })
     .compileComponents();
   }));

@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
+import {BookingService} from './service/BookingService';
 
 @NgModule({
   declarations: [
@@ -46,12 +47,12 @@ import {HttpClientModule} from '@angular/common/http';
     MatSlideToggleModule,
     NgxMaterialTimepickerModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   entryComponents: [
     CalendarBodyCellDialogComponent
   ],
-  providers: [DataService],
+  providers: [DataService, BookingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
