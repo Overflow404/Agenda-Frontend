@@ -17,11 +17,12 @@ import {
   MatToolbarModule
 } from '@angular/material/';
 import {DataService} from './data.service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import {HttpClientModule} from '@angular/common/http';
     MatSlideToggleModule,
     NgxMaterialTimepickerModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     CalendarBodyCellDialogComponent

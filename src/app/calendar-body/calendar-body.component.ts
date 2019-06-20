@@ -16,8 +16,8 @@ export class CalendarBodyComponent implements OnInit {
               private data: DataService) {
   }
 
-  ngOnInit() {
-    this.subscribeOnViewChange();
+    ngOnInit() {
+      this.subscribeOnViewChange();
   }
 
   private subscribeOnViewChange() {

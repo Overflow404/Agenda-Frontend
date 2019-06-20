@@ -1,53 +1,56 @@
 <h2 mat-dialog-title>Manage bookings for
   {{ currentDate.getDate() + ' ' + dateManager.getMonthName(currentDate.getMonth()) }}
 </h2>
+<form [formGroup]="bookingForm" (ngSubmit)="onFormSubmit()">
+  <mat-dialog-content>
+    <p>
+      <mat-form-field class="full-width">
+        <label>
+          <input formControlName="subject" matInput placeholder="Subject" required>
+        </label>
+        <mat-error *ngIf="bookingForm.get('subject').hasError('required')">
+          Subject is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
 
-<mat-dialog-content>
-  <p>
-    <mat-form-field class="full-width">
-      <label>
-        <input [(ngModel)]="subject" matInput placeholder="Subject" required>
-      </label>
-    </mat-form-field>
-  </p>
+    <p>
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"></textarea>
+        </label>
+      </mat-form-field>
+    </p>
 
-  <p>
-    <mat-label>All day&nbsp;&nbsp;&nbsp;</mat-label>
-    <mat-slide-toggle (change)="onSlideChange()" color="primary"></mat-slide-toggle>
-  </p>
+    <p>
+      <mat-form-field class="full-width">
+        <label>
+          <input matInput type="time" placeholder="Start date" formControlName="startTime"
+                 [errorStateMatcher]="matcher" required>
+        </label>
+        <mat-error *ngIf="bookingForm.get('startTime').hasError('required')">
+          Start date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
 
-  <p>
-    <mat-form-field class="full-width">
-      <mat-label>Description</mat-label>
-      <label>
-        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"></textarea>
-      </label>
-    </mat-form-field>
-  </p>
+    <p>
+      <mat-form-field class="full-width">
+        <label>
+          <input matInput type="time" placeholder="End date" formControlName="endTime"
+                 [errorStateMatcher]="matcher" required>
+        </label>
+        <mat-error *ngIf="bookingForm.get('endTime').hasError('required')">
+          End date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
 
-  <p>
-    <mat-form-field class="full-width">
-      <label>
-        <input [disabled]="disableTimePicker" matInput placeholder="Start date"
-               [ngxTimepicker]="startTime" [format]="24" required>
-      </label>
-      <ngx-material-timepicker (timeSet)="onStartDateSelected(startTime)" #startTime></ngx-material-timepicker>
-    </mat-form-field>
-  </p>
+  </mat-dialog-content>
 
-  <p>
-    <mat-form-field class="full-width">
-      <label>
-        <input [disabled]="disableTimePicker" matInput placeholder="End date"
-               [ngxTimepicker]="endTime" [format]="24" required>
-      </label>
-      <ngx-material-timepicker (timeSet)="onEndDateSelected(endTime)" #endTime></ngx-material-timepicker>
-    </mat-form-field>
-  </p>
-
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button (click)="book()">Book</button>
-</mat-dialog-actions>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" [disabled]="!bookingForm.valid">Book</button>
+  </mat-dialog-actions>
+</form>
