@@ -24,7 +24,6 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
 import {OverlappingService} from './service/overlapping/OverlappingService';
 import {DateErrorMatcher} from './error/DateErrorMatcher';
-import {TimeValidator} from './validator/TimeValidator';
 
 @NgModule({
   declarations: [
@@ -54,7 +53,7 @@ import {TimeValidator} from './validator/TimeValidator';
   entryComponents: [
     CalendarBodyCellDialogComponent
   ],
-  providers: [DataService, OverlappingService, DateErrorMatcher, TimeValidator],
+  providers: [DataService, OverlappingService, DateErrorMatcher],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
