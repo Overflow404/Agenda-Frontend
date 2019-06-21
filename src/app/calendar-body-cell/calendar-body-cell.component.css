@@ -1,4 +1,4 @@
-/*If I remove this css then card doesn't expand.*/
+/* To expand cards. */
 mat-card {
   position:absolute;
   top:5px;

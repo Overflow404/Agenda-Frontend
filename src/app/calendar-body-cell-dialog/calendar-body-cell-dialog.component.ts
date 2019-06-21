@@ -1,53 +1,70 @@
 import {Component, OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import {DateErrorMatcher} from '../error/DateErrorMatcher';
-import {BookingService} from '../service/BookingService';
+import {OverlappingService} from '../service/overlapping/OverlappingService';
+import {OverlappingResult} from '../service/overlapping/OverlappingResult';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',
   templateUrl: './calendar-body-cell-dialog.component.html',
   styleUrls: ['./calendar-body-cell-dialog.component.css']
 })
+
 export class CalendarBodyCellDialogComponent implements OnInit {
 
-  /* Can't be private because in calendar-body-cell.component.ts there's
-  * an access with instance.currentDate. */
+  private timeRegex = '^(0[0-9]|1[0-9]|2[0-3]|[0-9]):[0-5][0-9]$';
   currentDate: Date;
 
-  private bookingForm = new FormGroup({
+  bookingForm = new FormGroup({
     subject: new FormControl('', Validators.required),
+
     description: new FormControl(),
-    startTime: new FormControl(this.currentDate, Validators.required),
-    endTime: new FormControl(this.currentDate, Validators.required)
+
+    startTime: new FormControl(this.currentDate, [
+      Validators.required,
+      Validators.pattern(this.timeRegex)]),
+
+    endTime: new FormControl(this.currentDate, [
+      Validators.required,
+      Validators.pattern(this.timeRegex)])
   });
 
   private matcher;
+  private overlappingResult: OverlappingResult;
 
   constructor(private dateManager: DateManager,
-              private bookingService: BookingService) {
+              private overlappingService: OverlappingService) {
     this.matcher = new DateErrorMatcher();
   }
 
   ngOnInit() {
+/*    come farlo dentro il test? Mi serve solo lì*/
+    if (this.currentDate === undefined) {
+      this.currentDate = new Date();
+    }
   }
 
   onFormSubmit() {
     const {subject, description, startTime, endTime} = this.bookingForm.value;
 
+    const date = this.createSlot(startTime, endTime);
+
+    const observable =
+      this.overlappingService.checkIfSlotIsFree(date.start, date.end);
+
+    observable.subscribe((res: OverlappingResult) => {
+      this.overlappingResult = res;
+    });
+  }
+
+  createSlot(startTime, endTime) {
     const startTimeParts = startTime.split(':');
     const endTimeParts = endTime.split(':');
 
     const startDate = new Date(this.currentDate).setHours(startTimeParts[0], startTimeParts[1]);
     const endDate = new Date(this.currentDate).setHours(endTimeParts[0], endTimeParts[1]);
 
-    /* TODO Why if booking is a const, then stringify doesn't work?
-    * TODO Think cause it's a const and when reassign e.g. description it doesn't work*/
-    /*let booking = new Booking(subject, description, startDate, endDate);
-    alert(JSON.stringify(booking));*/
-/*    alert(this.bookingService.checkIfSlotIsFree(startDate, endDate));*/
-    const observable = this.bookingService.checkIfSlotIsFree(startDate, endDate);
-    observable
-      .subscribe(() => alert('fatta'));
+    return {start: startDate, end: endDate};
   }
 }

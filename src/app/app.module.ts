@@ -10,7 +10,7 @@ import { CalendarBodyCellComponent } from './calendar-body-cell/calendar-body-ce
 import {
   MatButtonModule,
   MatCardModule,
-  MatDialogModule,
+  MatDialogModule, MatError,
   MatGridListModule,
   MatInputModule,
   MatSlideToggleModule,
@@ -22,7 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
-import {BookingService} from './service/BookingService';
+import {OverlappingService} from './service/overlapping/OverlappingService';
+import {DateErrorMatcher} from './error/DateErrorMatcher';
+import {TimeValidator} from './validator/TimeValidator';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,7 @@ import {BookingService} from './service/BookingService';
   entryComponents: [
     CalendarBodyCellDialogComponent
   ],
-  providers: [DataService, BookingService],
+  providers: [DataService, OverlappingService, DateErrorMatcher, TimeValidator],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

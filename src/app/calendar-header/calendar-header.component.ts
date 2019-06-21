@@ -11,7 +11,7 @@ import {DateManager} from '../date/DateManager';
 @Injectable()
 export class CalendarHeaderComponent implements OnInit {
 
-  private currentDate: Date;
+  currentDate: Date;
 
   constructor(private data: DataService,
               private dateManager: DateManager) { }
@@ -20,12 +20,12 @@ export class CalendarHeaderComponent implements OnInit {
     this.subscribeOnMonthChange();
   }
 
-  private previousMonth() {
+  previousMonth() {
     const date = this.data.getData();
     this.data.changeDate(DateManager.previousMonth(date));
   }
 
-  private nextMonth() {
+  nextMonth() {
     const date = this.data.getData();
     this.data.changeDate(DateManager.nextMonth(date));
   }

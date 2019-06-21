@@ -9,7 +9,7 @@
           <input formControlName="subject" matInput placeholder="Subject" required>
         </label>
         <mat-error *ngIf="bookingForm.get('subject').hasError('required')">
-          Subject is <strong>required</strong>
+          Subject is <strong>required!</strong>
         </mat-error>
       </mat-form-field>
     </p>
@@ -31,7 +31,7 @@
                  [errorStateMatcher]="matcher" required>
         </label>
         <mat-error *ngIf="bookingForm.get('startTime').hasError('required')">
-          Start date is <strong>required</strong>
+          Start date is <strong>required!</strong>
         </mat-error>
       </mat-form-field>
     </p>
@@ -43,16 +43,21 @@
                  [errorStateMatcher]="matcher" required>
         </label>
         <mat-error *ngIf="bookingForm.get('endTime').hasError('required')">
-          End date is <strong>required</strong>
+          End date is <strong>required!</strong>
         </mat-error>
       </mat-form-field>
     </p>
 
   </mat-dialog-content>
 
+  <mat-error *ngIf="overlappingResult !== undefined && overlappingResult.result !== overlappingResult.success">
+   {{overlappingResult.failureReason}}
+  </mat-error>
+
   <!--TODO maybe buttons on right side?-->
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button type="submit" [disabled]="!bookingForm.valid">Book</button>
+
   </mat-dialog-actions>
 </form>

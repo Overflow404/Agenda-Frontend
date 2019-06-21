@@ -10,14 +10,15 @@ import {DataService} from '../data.service';
 export class CalendarBodyComponent implements OnInit {
 
   @Input() private currentDate: Date;
+  @Input() private columns: number;
   private dates: Date[];
 
   constructor(private dateManager: DateManager,
               private data: DataService) {
   }
 
-    ngOnInit() {
-      this.subscribeOnViewChange();
+  ngOnInit() {
+    this.subscribeOnViewChange();
   }
 
   private subscribeOnViewChange() {

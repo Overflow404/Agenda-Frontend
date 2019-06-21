@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +10,6 @@ export class DateManager {
   private months = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
 
-
-  static createDate(year: number, month: number, day: number, hour: number, minute: number) {
-    return new Date(year, month, day, hour, minute);
-  }
 
   static daysToSunday(lastDayOfMonth: Date) {
     if (lastDayOfMonth.getDay() !== 0) {

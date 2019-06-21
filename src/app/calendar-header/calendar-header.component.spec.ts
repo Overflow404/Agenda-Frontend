@@ -26,4 +26,8 @@ describe('CalendarHeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should go to next month if next clicked', () => {
+
+  });
 });

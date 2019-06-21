@@ -19,15 +19,15 @@ export class CalendarBodyCellComponent implements OnInit {
   }
 
   ngOnInit() {
+    /* TODO Come farlo nel test? */
+    if (this.currentDate === undefined) {
+      this.currentDate = new Date();
+    }
   }
 
   private doubleClickCallback() {
     const dialogRef = this.dialog.open(CalendarBodyCellDialogComponent);
     const instance = dialogRef.componentInstance;
     instance.currentDate = this.currentDate;
-
-    dialogRef.afterClosed().subscribe(() => {
-      /*alert('[CELL] Dialog closed');*/
-    });
   }
 }

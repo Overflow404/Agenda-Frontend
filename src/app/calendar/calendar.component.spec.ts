@@ -1,6 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CalendarComponent } from './calendar.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CalendarComponent} from './calendar.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {
+  MatCardModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatInputModule,
+  MatToolbar
+} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {OverlappingService} from '../service/overlapping/OverlappingService';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {TimeValidator} from '../validator/TimeValidator';
+import {CalendarHeaderComponent} from '../calendar-header/calendar-header.component';
+import {CalendarBodyComponent} from '../calendar-body/calendar-body.component';
+import {CalendarBodyCellComponent} from '../calendar-body-cell/calendar-body-cell.component';
+import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
+import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
+import {DataService} from '../data.service';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -8,9 +25,29 @@ describe('CalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      imports: [
+        ReactiveFormsModule,
+        MatInputModule,
+        MatDialogModule,
+        MatCardModule,
+        MatGridListModule,
+        BrowserAnimationsModule],
+      declarations: [
+        CalendarComponent,
+        CalendarHeaderComponent,
+        CalendarBodyComponent,
+        CalendarBodyCellComponent,
+        CalendarBodyCellDialogComponent,
+        CalendarTrailerComponent,
+        MatToolbar],
+      providers: [
+        OverlappingService,
+        HttpClient,
+        HttpHandler,
+        TimeValidator,
+        DataService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
