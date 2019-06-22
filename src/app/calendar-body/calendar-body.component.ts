@@ -34,23 +34,31 @@ export class CalendarBodyComponent implements OnInit {
   }
 
   private setAgendaDate(date: Date) {
-    this.currentDate = date;
+    this.date = date;
   }
 
   private fillAgenda() {
-    const firstDayOfMonth = DateManager.firstDayOfMonth(this.currentDate);
+    const firstDayOfMonth = DateManager.firstDayOfMonth(this.date);
     const daysToMonday = DateManager.daysToMonday(firstDayOfMonth);
     const startDayToDisplayInAgenda = firstDayOfMonth.getDate() - daysToMonday;
 
-    const lastDayOfMonth = DateManager.lastDayOfMonth(this.currentDate);
+    const lastDayOfMonth = DateManager.lastDayOfMonth(this.date);
     const daysToSunday = DateManager.daysToSunday(lastDayOfMonth);
     const lastDayToDisplayInAgenda = lastDayOfMonth.getDate() + daysToSunday;
 
-    const month = this.currentDate.getMonth();
-    const year = this.currentDate.getFullYear();
+    const month = this.date.getMonth();
+    const year = this.date.getFullYear();
 
     for (let day = startDayToDisplayInAgenda; day <= lastDayToDisplayInAgenda; day++) {
       this.dates.push(new Date(year, month, day));
     }
+  }
+
+  get date(): Date {
+    return this.currentDate;
+  }
+
+  set date(value: Date) {
+    this.currentDate = value;
   }
 }

@@ -7,14 +7,22 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class CalendarComponent implements OnInit {
-  private dateNow: Date;
+  private currentDate: Date;
 
   constructor() {
-    this.dateNow = new Date(Date.now());
+    this.date = new Date(Date.now());
   }
 
   ngOnInit() {
 
+  }
+
+  get date(): Date {
+    return this.currentDate;
+  }
+
+  set date(value: Date) {
+    this.currentDate = value;
   }
 
 }

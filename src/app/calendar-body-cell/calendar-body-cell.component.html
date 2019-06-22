@@ -1,8 +1,11 @@
 <mat-card (dblclick)="doubleClickCallback()" tabindex="1">
-  <mat-card-header>
-    <mat-card-title [textContent]="currentDate.getDate()"></mat-card-title>
-    <mat-card-subtitle [textContent]="dateManager.getWeekDayFromNumber(currentDate.getDay())"></mat-card-subtitle>
-  </mat-card-header>
+    <mat-card-header class="center-component">
+      <mat-card-title [textContent]="date.getDate()"></mat-card-title>
+    </mat-card-header>
+  <p>
+    <mat-card-subtitle class="center-component"
+                       [textContent]="dateManager.getWeekDayFromNumber(date.getDay())"></mat-card-subtitle>
+  </p>
 </mat-card>
 
 

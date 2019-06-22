@@ -11,7 +11,6 @@ import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog/calen
 import {CalendarTrailerComponent} from './calendar-trailer/calendar-trailer.component';
 import {OverlappingService} from './service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
-import {TimeValidator} from './validator/TimeValidator';
 import {DataService} from './data.service';
 
 describe('AppComponent', () => {
@@ -37,7 +36,6 @@ describe('AppComponent', () => {
         OverlappingService,
         HttpClient,
         HttpHandler,
-        TimeValidator,
         DataService]
     }).compileComponents();
   }));

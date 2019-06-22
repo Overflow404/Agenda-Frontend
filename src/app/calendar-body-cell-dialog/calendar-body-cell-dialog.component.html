@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Manage bookings for
-  {{ currentDate.getDate() + ' ' + dateManager.getMonthName(currentDate.getMonth()) }}
+  {{ date.getDate() + ' ' + dateManager.getMonthName(date.getMonth()) }}
 </h2>
 <form [formGroup]="bookingForm" (ngSubmit)="onFormSubmit()">
   <mat-dialog-content>

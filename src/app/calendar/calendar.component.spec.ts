@@ -11,7 +11,6 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
-import {TimeValidator} from '../validator/TimeValidator';
 import {CalendarHeaderComponent} from '../calendar-header/calendar-header.component';
 import {CalendarBodyComponent} from '../calendar-body/calendar-body.component';
 import {CalendarBodyCellComponent} from '../calendar-body-cell/calendar-body-cell.component';
@@ -44,7 +43,6 @@ describe('CalendarComponent', () => {
         OverlappingService,
         HttpClient,
         HttpHandler,
-        TimeValidator,
         DataService]
     })
       .compileComponents();

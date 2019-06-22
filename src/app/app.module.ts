@@ -10,7 +10,7 @@ import { CalendarBodyCellComponent } from './calendar-body-cell/calendar-body-ce
 import {
   MatButtonModule,
   MatCardModule,
-  MatDialogModule, MatError,
+  MatDialogModule,
   MatGridListModule,
   MatInputModule,
   MatSlideToggleModule,
