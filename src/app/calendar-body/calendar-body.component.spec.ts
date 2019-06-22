@@ -1,5 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CalendarBodyComponent } from './calendar-body.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CalendarBodyComponent} from './calendar-body.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule, MatDialogModule, MatGridListModule, MatInputModule, MatToolbar} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -39,7 +39,7 @@ describe('CalendarBodyComponent', () => {
         HttpHandler,
         DataService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -50,5 +50,12 @@ describe('CalendarBodyComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should change calendar date', () => {
+    component.form.controls.subject.setValue('subject');
+    component.form.controls.startTime.setValue('14:00');
+    component.form.controls.endTime.setValue('');
+    expect(component.form.valid).toBeFalsy();
   });
 });

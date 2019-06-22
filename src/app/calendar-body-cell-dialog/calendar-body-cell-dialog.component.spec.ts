@@ -1,10 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatDialogContent, MatDialogActions, MatInputModule} from '@angular/material';
 import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {of} from 'rxjs';
 
 describe('CalendarBodyCellDialogComponent', () => {
   let component: CalendarBodyCellDialogComponent;
@@ -25,6 +26,16 @@ describe('CalendarBodyCellDialogComponent', () => {
     fixture = TestBed.createComponent(CalendarBodyCellDialogComponent);
     component = fixture.componentInstance;
     spyOnProperty(component, 'date', 'get').and.returnValue(new Date(Date.now()));
+    spyOnProperty(component, 'regex', 'get').and.returnValue('^(0[0-9]|1[0-9]|2[0-3]|[0-9]):[0-5][0-9]$');
+    spyOnProperty(component, 'form', 'get').and.returnValue(
+      new FormGroup({
+        subject: new FormControl('', Validators.required),
+
+        description: new FormControl(),
+        startTime: new FormControl('', [Validators.required, Validators.pattern(component.regex)]),
+        endTime: new FormControl('', [Validators.required, Validators.pattern(component.regex)])
+      })
+    );
     fixture.detectChanges();
   });
 
@@ -33,83 +44,116 @@ describe('CalendarBodyCellDialogComponent', () => {
   });
 
   it(`form should be invalid cause incomplete`, () => {
-    component.bookingForm.controls.subject.setValue('This is a subject');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('This is a subject');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it(`form should be invalid cause incomplete`, () => {
-    component.bookingForm.controls.startTime.setValue('02:50');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.startTime.setValue('02:50');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it(`form should be invalid cause incomplete`, () => {
-    component.bookingForm.controls.endTime.setValue('02:50');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.endTime.setValue('02:50');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it(`form should be valid with no description`, () => {
-    component.bookingForm.controls.subject.setValue('This is a subject');
-    component.bookingForm.controls.startTime.setValue('02:50');
-    component.bookingForm.controls.endTime.setValue('02:54');
-    expect(component.bookingForm.valid).toBeTruthy();
+    component.form.controls.subject.setValue('This is a subject');
+    component.form.controls.startTime.setValue('02:50');
+    component.form.controls.endTime.setValue('02:54');
+    expect(component.form.valid).toBeTruthy();
   });
 
   it(`form should be valid with description`, () => {
-    component.bookingForm.controls.subject.setValue('This is a subject');
-    component.bookingForm.controls.subject.setValue('This is a description');
-    component.bookingForm.controls.startTime.setValue('02:50');
-    component.bookingForm.controls.endTime.setValue('02:54');
-    expect(component.bookingForm.valid).toBeTruthy();
+    component.form.controls.subject.setValue('This is a subject');
+    component.form.controls.subject.setValue('This is a description');
+    component.form.controls.startTime.setValue('02:50');
+    component.form.controls.endTime.setValue('02:54');
+    expect(component.form.valid).toBeTruthy();
   });
 
   it('form should be invalid cause hour > 24', () => {
-    component.bookingForm.controls.subject.setValue('This is a subject');
-    component.bookingForm.controls.startTime.setValue('25:50');
-    component.bookingForm.controls.endTime.setValue('02:54');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('This is a subject');
+    component.form.controls.startTime.setValue('25:50');
+    component.form.controls.endTime.setValue('02:54');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it('form should be invalid cause hour is not a number', () => {
-    component.bookingForm.controls.subject.setValue('This is a subject');
-    component.bookingForm.controls.startTime.setValue('AC:50');
-    component.bookingForm.controls.endTime.setValue('02:54');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('This is a subject');
+    component.form.controls.startTime.setValue('AC:50');
+    component.form.controls.endTime.setValue('02:54');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it('form should be invalid cause time has not :', () => {
-    component.bookingForm.controls.subject.setValue('This is a subject');
-    component.bookingForm.controls.startTime.setValue('02:50');
-    component.bookingForm.controls.endTime.setValue('0290');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('This is a subject');
+    component.form.controls.startTime.setValue('02:50');
+    component.form.controls.endTime.setValue('0290');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it('form should be invalid cause empty subject :', () => {
-    component.bookingForm.controls.subject.setValue('');
-    component.bookingForm.controls.startTime.setValue('02:50');
-    component.bookingForm.controls.endTime.setValue('05:40');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('');
+    component.form.controls.startTime.setValue('02:50');
+    component.form.controls.endTime.setValue('05:40');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it('form should be invalid cause empty start time :', () => {
-    component.bookingForm.controls.subject.setValue('subject');
-    component.bookingForm.controls.startTime.setValue('');
-    component.bookingForm.controls.endTime.setValue('05:40');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('subject');
+    component.form.controls.startTime.setValue('');
+    component.form.controls.endTime.setValue('05:40');
+    expect(component.form.valid).toBeFalsy();
   });
 
   it('form should be invalid cause empty end time :', () => {
-    component.bookingForm.controls.subject.setValue('subject');
-    component.bookingForm.controls.startTime.setValue('14:00');
-    component.bookingForm.controls.endTime.setValue('');
-    expect(component.bookingForm.valid).toBeFalsy();
+    component.form.controls.subject.setValue('subject');
+    component.form.controls.startTime.setValue('14:00');
+    component.form.controls.endTime.setValue('');
+    expect(component.form.valid).toBeFalsy();
   });
 
-  /* Mock webservice to test real time validation? */
+
   it('should appear error if time slot is busy', () => {
-    component.bookingForm.controls.subject.setValue('subject');
-    component.bookingForm.controls.startTime.setValue('14:00');
-    component.bookingForm.controls.endTime.setValue('16:00');
+    spyOn(component, 'getData').and.returnValue(of({
+      failure: 'FAILURE',
+      success: 'SUCCESS',
+      result: 'FAILURE',
+      content: null,
+      failureReason: 'This slot is busy!'
+    }));
+
+    spyOn(component, 'createSlot').and.returnValue({
+      start: 1559131200000, /* Wed May 29 2019 12:00:00 UTC */
+      end: 1559145600000 /* Wed May 29 2019 16:00:00 UTC */
+    });
+
+    component.onFormSubmit();
+
+    expect(component.result.result).toBe('FAILURE');
   });
+
+  it('should appear error if start time is greater than end time', () => {
+    spyOn(component, 'getData').and.returnValue(of({
+      failure: 'FAILURE',
+      success: 'SUCCESS',
+      result: 'FAILURE',
+      content: null,
+      failureReason: 'End time must be greater than start time!'
+    }));
+
+    spyOn(component, 'createSlot').and.returnValue({
+      start: 1559145600000 , /* Wed May 29 2019 16:00:00 UTC */
+      end: 1559131200000 /* Wed May 29 2019 12:00:00 UTC */
+    });
+
+    component.onFormSubmit();
+
+    expect(component.result.result).toBe('FAILURE');
+  });
+
 });
 
 

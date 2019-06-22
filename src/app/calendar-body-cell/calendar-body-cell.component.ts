@@ -26,7 +26,6 @@ export class CalendarBodyCellComponent implements OnInit {
     const dialogRef = this.dialog.open(CalendarBodyCellDialogComponent);
     const instance = dialogRef.componentInstance;
     instance.date = this.date;
-
   }
 
   get date(): Date {
