@@ -39,7 +39,7 @@ export class DateManager {
   }
 
   static daysToMonday(firstDayOfMonth: Date) {
-    if (firstDayOfMonth.getDay() !== 1) {
+    if (firstDayOfMonth.getDay() !== 0) {
       return firstDayOfMonth.getDay() - 1;
     }
     return 0;

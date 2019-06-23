@@ -2,3 +2,9 @@
 .full-width {
   width: 100%;
 }
+
+.mat-error {
+  color: red !important;
+  font-family: "Roboto", serif;
+  font-weight: 400;
+}

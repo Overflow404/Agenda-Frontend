@@ -1,11 +1,14 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatDialogContent, MatDialogActions, MatInputModule} from '@angular/material';
+import {MatDialogContent, MatDialogActions, MatInputModule, MatSnackBar, MatSnackBarContainer} from '@angular/material';
 import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {of} from 'rxjs';
+import {Overlay} from '@angular/cdk/overlay';
+import {Response} from '../service/Response';
+import {BookingService} from '../service/booking/BookingService';
 
 describe('CalendarBodyCellDialogComponent', () => {
   let component: CalendarBodyCellDialogComponent;
@@ -16,8 +19,8 @@ describe('CalendarBodyCellDialogComponent', () => {
       imports: [ReactiveFormsModule, MatInputModule, BrowserAnimationsModule],
       declarations: [CalendarBodyCellDialogComponent,
         MatDialogContent,
-        MatDialogActions],
-      providers: [OverlappingService, HttpClient, HttpHandler]
+        MatDialogActions, MatSnackBarContainer],
+      providers: [OverlappingService, BookingService, HttpClient, HttpHandler, MatSnackBar, Overlay]
     })
       .compileComponents();
   }));
@@ -115,15 +118,10 @@ describe('CalendarBodyCellDialogComponent', () => {
     expect(component.form.valid).toBeFalsy();
   });
 
-
   it('should appear error if time slot is busy', () => {
-    spyOn(component, 'getData').and.returnValue(of({
-      failure: 'FAILURE',
-      success: 'SUCCESS',
-      result: 'FAILURE',
-      content: null,
-      failureReason: 'This slot is busy!'
-    }));
+
+    const result = Response.failure(Response.BUSY_SLOT);
+    spyOn(component, 'getOverlappingData').and.returnValue(of(result));
 
     spyOn(component, 'createSlot').and.returnValue({
       start: 1559131200000, /* Wed May 29 2019 12:00:00 UTC */
@@ -132,26 +130,7 @@ describe('CalendarBodyCellDialogComponent', () => {
 
     component.onFormSubmit();
 
-    expect(component.result.result).toBe('FAILURE');
-  });
-
-  it('should appear error if start time is greater than end time', () => {
-    spyOn(component, 'getData').and.returnValue(of({
-      failure: 'FAILURE',
-      success: 'SUCCESS',
-      result: 'FAILURE',
-      content: null,
-      failureReason: 'End time must be greater than start time!'
-    }));
-
-    spyOn(component, 'createSlot').and.returnValue({
-      start: 1559145600000 , /* Wed May 29 2019 16:00:00 UTC */
-      end: 1559131200000 /* Wed May 29 2019 12:00:00 UTC */
-    });
-
-    component.onFormSubmit();
-
-    expect(component.result.result).toBe('FAILURE');
+    expect(component.response.result).toBe('FAILURE');
   });
 
 });

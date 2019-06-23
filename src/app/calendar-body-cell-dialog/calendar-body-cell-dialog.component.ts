@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {DateErrorMatcher} from '../error/DateErrorMatcher';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
-import {OverlappingResult} from '../service/overlapping/OverlappingResult';
+import {Response} from '../service/Response';
+import {MatSnackBar} from '@angular/material';
+import {BookingService} from '../service/booking/BookingService';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',
@@ -18,18 +19,19 @@ export class CalendarBodyCellDialogComponent implements OnInit {
 
   private bookingForm = new FormGroup({
     subject: new FormControl('', Validators.required),
-
     description: new FormControl(),
     startTime: new FormControl(this.date, [Validators.required, Validators.pattern(this.regex)]),
     endTime: new FormControl(this.date, [Validators.required, Validators.pattern(this.regex)])
-  });
+  }, Validators.required);
 
-  private matcher;
-  private overlappingResult: OverlappingResult;
+  private overlappingResponse: Response;
+  private wrongDatesOrder: boolean;
 
   constructor(private dateManager: DateManager,
-              private overlappingService: OverlappingService) {
-    this.matcher = new DateErrorMatcher();
+              private overlappingService: OverlappingService,
+              private bookingService: BookingService,
+              private snackBar: MatSnackBar) {
+    this.wrongDatesOrder = false;
   }
 
   ngOnInit() {
@@ -37,9 +39,16 @@ export class CalendarBodyCellDialogComponent implements OnInit {
   }
 
   onFormSubmit() {
-    this.getData().subscribe((res: OverlappingResult) => {
-      this.overlappingResult = res;
-    });
+    this.getOverlappingData().subscribe(
+      result => { this.onViewOverlappingResult(result); },
+      error => { this.onViewError(error); }
+    );
+  }
+
+  getOverlappingData() {
+    const {startTime, endTime} = this.bookingForm.value;
+    const date = this.createSlot(startTime, endTime);
+    return this.overlapService.checkIfSlotIsFree(date.start, date.end);
   }
 
   createSlot(startTime, endTime) {
@@ -52,12 +61,60 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return {start: startDate, end: endDate};
   }
 
+  private onViewOverlappingResult(result: Response) {
+    this.response = result as Response;
+    if (this.response.result === Response.FAILURE) {
+      this.snackBar.open(this.response.failureReason, 'X');
+    } else {
+      this.confirmBooking();
+    }
+  }
+
+  private onViewError(error) {
+    this.snackBar.open('Error: ' + error.status, 'X');
+  }
+
+  private confirmBooking() {
+    this.getBookingData().subscribe(
+      result => { this.onViewBookingResult(result); },
+      error => { this.onViewError(error); }
+    );
+  }
+
+  getBookingData() {
+    const {subject, description, startTime, endTime} = this.bookingForm.value;
+    const date = this.createSlot(startTime, endTime);
+    return this.bookService.book(subject, description, date.start, date.end);
+  }
+
+  private onViewBookingResult(result: Response) {
+    this.response = result as Response;
+    if (this.response.result === Response.FAILURE) {
+      this.snackBar.open(this.response.failureReason, 'X');
+    } else {
+      this.snackBar.open(this.response.content, 'X');
+    }
+  }
+
+  checkDatesOrder() {
+    if (this.form.valid) {
+      const {startTime, endTime} = this.bookingForm.value;
+      const date = this.createSlot(startTime, endTime);
+      if (date.start > date.end || date.start === date.end) {
+        this.wrongDatesOrder = true;
+        this.snackBar.open(Response.START_AFTER_END, 'X');
+      } else {
+        this.wrongDatesOrder = false;
+      }
+    }
+  }
+
   get date(): Date {
     return this.currentDate;
   }
 
-  set date(value: Date) {
-    this.currentDate = value;
+  set date(date: Date) {
+    this.currentDate = date;
   }
 
   get form(): FormGroup {
@@ -68,17 +125,20 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return this.timeRegex;
   }
 
-  get service(): OverlappingService {
+  get overlapService(): OverlappingService {
     return this.overlappingService;
   }
 
-  get result(): OverlappingResult {
-    return this.overlappingResult;
+  get bookService(): BookingService {
+    return this.bookingService;
   }
 
-  getData() {
-    const {subject, description, startTime, endTime} = this.bookingForm.value;
-    const date = this.createSlot(startTime, endTime);
-    return this.service.checkIfSlotIsFree(date.start, date.end);
+  get response(): Response {
+    return this.overlappingResponse;
   }
+
+  set response(result: Response) {
+    this.overlappingResponse = result;
+  }
+
 }

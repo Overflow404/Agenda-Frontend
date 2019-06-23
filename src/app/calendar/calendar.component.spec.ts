@@ -5,7 +5,7 @@ import {
   MatCardModule,
   MatDialogModule,
   MatGridListModule,
-  MatInputModule,
+  MatInputModule, MatSnackBar, MatSnackBarContainer,
   MatToolbar
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -17,6 +17,7 @@ import {CalendarBodyCellComponent} from '../calendar-body-cell/calendar-body-cel
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
 import {DataService} from '../data.service';
+import {Overlay} from '@angular/cdk/overlay';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -38,12 +39,15 @@ describe('CalendarComponent', () => {
         CalendarBodyCellComponent,
         CalendarBodyCellDialogComponent,
         CalendarTrailerComponent,
-        MatToolbar],
+        MatToolbar,
+        MatSnackBarContainer],
       providers: [
         OverlappingService,
         HttpClient,
         HttpHandler,
-        DataService]
+        DataService,
+        MatSnackBar,
+        Overlay]
     })
       .compileComponents();
   }));

@@ -8,12 +8,13 @@ import { CalendarBodyComponent } from './calendar-body/calendar-body.component';
 import { CalendarTrailerComponent } from './calendar-trailer/calendar-trailer.component';
 import { CalendarBodyCellComponent } from './calendar-body-cell/calendar-body-cell.component';
 import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
   MatGridListModule,
   MatInputModule,
-  MatSlideToggleModule,
+  MatSlideToggleModule, MatSnackBar, MatSnackBarContainer, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material/';
 import {DataService} from './data.service';
@@ -23,7 +24,8 @@ import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/cal
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
 import {OverlappingService} from './service/overlapping/OverlappingService';
-import {DateErrorMatcher} from './error/DateErrorMatcher';
+import {Overlay} from '@angular/cdk/overlay';
+import {BookingService} from './service/booking/BookingService';
 
 @NgModule({
   declarations: [
@@ -49,11 +51,14 @@ import {DateErrorMatcher} from './error/DateErrorMatcher';
     NgxMaterialTimepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
   ],
   entryComponents: [
     CalendarBodyCellDialogComponent
+
   ],
-  providers: [DataService, OverlappingService, DateErrorMatcher],
+  providers: [DataService, OverlappingService, BookingService, MatSnackBar, Overlay,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

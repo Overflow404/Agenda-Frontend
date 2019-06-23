@@ -1,7 +1,7 @@
 import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatCardModule, MatDialogModule, MatGridListModule, MatInputModule, MatToolbar} from '@angular/material';
+import {MatCardModule, MatDialogModule, MatGridListModule, MatInputModule, MatSnackBarContainer, MatToolbar} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CalendarComponent} from './calendar/calendar.component';
 import {CalendarHeaderComponent} from './calendar-header/calendar-header.component';

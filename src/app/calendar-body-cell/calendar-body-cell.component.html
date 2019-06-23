@@ -1,12 +1,19 @@
-<mat-card (dblclick)="doubleClickCallback()" tabindex="1">
+<mat-card class="enabled" *ngIf=enabled (dblclick)="doubleClickCallback()" tabindex="1">
     <mat-card-header class="center-component">
       <mat-card-title [textContent]="date.getDate()"></mat-card-title>
     </mat-card-header>
   <p>
-    <mat-card-subtitle class="center-component"
-                       [textContent]="dateManager.getWeekDayFromNumber(date.getDay())"></mat-card-subtitle>
+    <mat-card-subtitle class="center-component" [textContent]="dateManager.getWeekDayFromNumber(date.getDay())"></mat-card-subtitle>
   </p>
 </mat-card>
 
+<mat-card class="disabled" *ngIf=!enabled>
+  <mat-card-header class="center-component">
+    <mat-card-title [textContent]="date.getDate()"></mat-card-title>
+  </mat-card-header>
+  <p>
+    <mat-card-subtitle class="center-component" [textContent]="dateManager.getWeekDayFromNumber(date.getDay())"></mat-card-subtitle>
+  </p>
+</mat-card>
 
 

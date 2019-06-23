@@ -1,8 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CalendarHeaderComponent } from './calendar-header.component';
-import {MatToolbar} from '@angular/material';
+import {CalendarHeaderComponent} from './calendar-header.component';
+import {MatSnackBar, MatSnackBarContainer, MatToolbar} from '@angular/material';
 import {DataService} from '../data.service';
+import {Overlay} from '@angular/cdk/overlay';
 
 describe('CalendarHeaderComponent', () => {
   let component: CalendarHeaderComponent;
@@ -10,11 +11,10 @@ describe('CalendarHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarHeaderComponent,
-      MatToolbar],
-      providers: [DataService]
+      declarations: [CalendarHeaderComponent, MatToolbar, MatSnackBarContainer],
+      providers: [DataService, MatSnackBar, Overlay]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -27,7 +27,4 @@ describe('CalendarHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should go to next month if next clicked', () => {
-
-  });
 });

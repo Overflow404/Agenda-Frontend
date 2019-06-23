@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
 import {DataService} from '../data.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar-body',
@@ -11,7 +12,7 @@ export class CalendarBodyComponent implements OnInit {
 
   @Input() private currentDate: Date;
   @Input() private columns: number;
-  private dates: Date[];
+  private dates;
 
   constructor(private dateManager: DateManager,
               private data: DataService) {
@@ -49,8 +50,14 @@ export class CalendarBodyComponent implements OnInit {
     const month = this.date.getMonth();
     const year = this.date.getFullYear();
 
+
+
     for (let day = startDayToDisplayInAgenda; day <= lastDayToDisplayInAgenda; day++) {
-      this.dates.push(new Date(year, month, day));
+      if (this.isADayOfCurrentMonth(day)) {
+        this.dates.push({date: new Date(year, month, day), enabled: true });
+      } else {
+        this.dates.push({date: new Date(year, month, day), enabled: false });
+      }
     }
   }
 
@@ -60,5 +67,9 @@ export class CalendarBodyComponent implements OnInit {
 
   set date(value: Date) {
     this.currentDate = value;
+  }
+
+  private isADayOfCurrentMonth(day: number) {
+    return day > 0 && day <= DateManager.lastDayOfMonth(this.date).getDate();
   }
 }

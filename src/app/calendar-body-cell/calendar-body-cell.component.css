@@ -12,16 +12,20 @@ mat-card {
   transform: translate(-50%, 0);
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 700px) {
   mat-card-subtitle {
     animation: fadeout 1s forwards;
   }
 }
 
-@media only screen and (min-width: 651px) {
+@media only screen and (min-width: 701px) {
   mat-card-subtitle {
     animation: fadein 1s forwards;
   }
+}
+
+.disabled {
+  background-color: #f2f2f2
 }
 
 p {

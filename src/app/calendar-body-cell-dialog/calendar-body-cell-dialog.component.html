@@ -6,7 +6,7 @@
     <p>
       <mat-form-field class="full-width">
         <label>
-          <input formControlName="subject" matInput placeholder="Subject" required>
+          <input (change)="checkDatesOrder()" formControlName="subject" matInput placeholder="Subject" required>
         </label>
         <mat-error *ngIf="bookingForm.get('subject').hasError('required')">
           Subject is <strong>required!</strong>
@@ -19,7 +19,8 @@
       <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <label>
-          <textarea matInput cdkTextareaAutosize maxlength="64" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"></textarea>
+          <textarea matInput cdkTextareaAutosize formControlName="description" (change)="checkDatesOrder()"
+                    maxlength="64" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"></textarea>
         </label>
       </mat-form-field>
     </p>
@@ -27,8 +28,7 @@
     <p>
       <mat-form-field class="full-width">
         <label>
-          <input matInput type="time" placeholder="Start date" formControlName="startTime"
-                 [errorStateMatcher]="matcher" required>
+          <input matInput (change)="checkDatesOrder()" type="time" placeholder="Start date" formControlName="startTime" required>
         </label>
         <mat-error *ngIf="bookingForm.get('startTime').hasError('required')">
           Start date is <strong>required!</strong>
@@ -39,24 +39,20 @@
     <p>
       <mat-form-field class="full-width">
         <label>
-          <input matInput type="time" placeholder="End date" formControlName="endTime"
-                 [errorStateMatcher]="matcher" required>
+          <input matInput (change)="checkDatesOrder()" type="time" placeholder="End date" formControlName="endTime" required>
         </label>
         <mat-error *ngIf="bookingForm.get('endTime').hasError('required')">
           End date is <strong>required!</strong>
         </mat-error>
       </mat-form-field>
     </p>
-
   </mat-dialog-content>
 
-  <mat-error *ngIf="overlappingResult !== undefined && overlappingResult.result !== overlappingResult.success">
-   {{overlappingResult.failureReason}}
-  </mat-error>
+
 
   <!--TODO maybe buttons on right side?-->
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button type="submit" [disabled]="!bookingForm.valid">Book</button>
+    <button mat-button type="submit" [disabled]="!bookingForm.valid || wrongDatesOrder">Book</button>
   </mat-dialog-actions>
 </form>

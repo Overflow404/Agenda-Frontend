@@ -1,7 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CalendarBodyComponent} from './calendar-body.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatCardModule, MatDialogModule, MatGridListModule, MatInputModule, MatToolbar} from '@angular/material';
+import {
+  MatCardModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSnackBar,
+  MatSnackBarContainer,
+  MatToolbar
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CalendarComponent} from '../calendar/calendar.component';
 import {CalendarHeaderComponent} from '../calendar-header/calendar-header.component';
@@ -11,6 +19,8 @@ import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.com
 import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {DataService} from '../data.service';
+import {Overlay} from '@angular/cdk/overlay';
+import {BookingService} from '../service/booking/BookingService';
 
 describe('CalendarBodyComponent', () => {
   let component: CalendarBodyComponent;
@@ -32,12 +42,16 @@ describe('CalendarBodyComponent', () => {
         CalendarBodyCellComponent,
         CalendarBodyCellDialogComponent,
         CalendarTrailerComponent,
-        MatToolbar],
+        MatToolbar,
+        MatSnackBarContainer],
       providers: [
         OverlappingService,
+        BookingService,
         HttpClient,
         HttpHandler,
-        DataService]
+        DataService,
+        MatSnackBar,
+        Overlay]
     })
       .compileComponents();
   }));
@@ -52,10 +66,4 @@ describe('CalendarBodyComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should change calendar date', () => {
-    component.form.controls.subject.setValue('subject');
-    component.form.controls.startTime.setValue('14:00');
-    component.form.controls.endTime.setValue('');
-    expect(component.form.valid).toBeFalsy();
-  });
 });
