@@ -17,11 +17,11 @@ import {CalendarHeaderComponent} from '../calendar-header/calendar-header.compon
 import {CalendarBodyComponent} from '../calendar-body/calendar-body.component';
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
-import {OverlappingService} from '../service/overlapping/OverlappingService';
+import {OverlappingService} from '../service/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
-import {BookingService} from '../service/booking/BookingService';
+import {BookingService} from '../service/BookingService';
 import {DateManager} from '../date/DateManager';
 
 describe('CalendarBodyCellComponent', () => {

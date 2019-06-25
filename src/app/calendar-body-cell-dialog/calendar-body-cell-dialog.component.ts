@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {OverlappingService} from '../service/overlapping/OverlappingService';
+import {OverlappingService} from '../service/OverlappingService';
 import {Response} from '../service/Response';
 import {MatSnackBar} from '@angular/material';
-import {BookingService} from '../service/booking/BookingService';
-import {Booking} from '../model/booking/Booking';
+import {BookingService} from '../service/BookingService';
+import {Booking} from '../model/Booking';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',

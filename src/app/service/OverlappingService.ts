@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Response} from '../Response';
+import {Response} from './Response';
 
 @Injectable()
 export class OverlappingService {

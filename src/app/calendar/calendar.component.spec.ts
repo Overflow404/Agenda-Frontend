@@ -13,7 +13,7 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {OverlappingService} from '../service/overlapping/OverlappingService';
+import {OverlappingService} from '../service/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {CalendarHeaderComponent} from '../calendar-header/calendar-header.component';
 import {CalendarBodyComponent} from '../calendar-body/calendar-body.component';
@@ -22,7 +22,7 @@ import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/cale
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
 import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
-import {BookingService} from '../service/booking/BookingService';
+import {BookingService} from '../service/BookingService';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;

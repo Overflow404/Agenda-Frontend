@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Response} from '../Response';
-import {Booking} from '../../model/booking/Booking';
+import {Response} from './Response';
+import {Booking} from '../model/Booking';
 
 @Injectable()
 export class BookingService {

@@ -17,7 +17,7 @@ import {CalendarBodyComponent} from './calendar-body/calendar-body.component';
 import {CalendarBodyCellComponent} from './calendar-body-cell/calendar-body-cell.component';
 import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {CalendarTrailerComponent} from './calendar-trailer/calendar-trailer.component';
-import {OverlappingService} from './service/overlapping/OverlappingService';
+import {OverlappingService} from './service/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HeaderBodyCoordinator} from './coordinator/HeaderBodyCoordinator';
 

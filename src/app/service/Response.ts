@@ -5,14 +5,14 @@ export class Response {
   public static BUSY_SLOT = 'This slot is busy!';
   public static START_AFTER_END = 'End time must be greater than start time!';
 
-  private readonly overlappingResult: string;
-  private readonly overlappingContent: string;
-  private readonly overlappingFailureReason: string;
+  private readonly res: string;
+  private readonly cont: string;
+  private readonly fail: string;
 
   private constructor(content: string, result: string, failureReason: string ) {
-    this.overlappingResult = result;
-    this.overlappingContent = failureReason;
-    this.overlappingFailureReason = content;
+    this.res = result;
+    this.cont = failureReason;
+    this.fail = content;
   }
 
   static success(content: string) {
@@ -25,15 +25,15 @@ export class Response {
 
 
   get result(): string {
-    return this.overlappingResult;
+    return this.res;
   }
 
   get content(): string {
-    return this.overlappingContent;
+    return this.cont;
   }
 
   get failureReason(): string {
-    return this.overlappingFailureReason;
+    return this.fail;
   }
 
 }

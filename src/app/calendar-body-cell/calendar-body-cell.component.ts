@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
-import {Booking} from '../model/booking/Booking';
-import {BookingService} from '../service/booking/BookingService';
+import {Booking} from '../model/Booking';
+import {BookingService} from '../service/BookingService';
 import {Response} from '../service/Response';
 import {DateManager} from '../date/DateManager';
 import {CalendarShowDetailsDialogComponent} from '../calendar-show-details-dialog/calendar-show-details-dialog.component';
