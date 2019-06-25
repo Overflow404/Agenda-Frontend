@@ -5,6 +5,7 @@ import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {Response} from '../service/Response';
 import {MatSnackBar} from '@angular/material';
 import {BookingService} from '../service/booking/BookingService';
+import {Booking} from '../model/booking/Booking';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',
@@ -14,17 +15,18 @@ import {BookingService} from '../service/booking/BookingService';
 
 export class CalendarBodyCellDialogComponent implements OnInit {
 
-  private timeRegex = '^(0[0-9]|1[0-9]|2[0-3]|[0-9]):[0-5][0-9]$';
-  private currentDate: Date;
+  timeRegex = '^(0[0-9]|1[0-9]|2[0-3]|[0-9]):[0-5][0-9]$';
+  currentDate: Date;
+  private book: Booking;
 
-  private bookingForm = new FormGroup({
+  bookingForm = new FormGroup({
     subject: new FormControl('', Validators.required),
     description: new FormControl(),
     startTime: new FormControl(this.date, [Validators.required, Validators.pattern(this.regex)]),
     endTime: new FormControl(this.date, [Validators.required, Validators.pattern(this.regex)])
   }, Validators.required);
 
-  private overlappingResponse: Response;
+  private resp: Response;
   private wrongDatesOrder: boolean;
 
   constructor(private dateManager: DateManager,
@@ -84,7 +86,8 @@ export class CalendarBodyCellDialogComponent implements OnInit {
   getBookingData() {
     const {subject, description, startTime, endTime} = this.bookingForm.value;
     const date = this.createSlot(startTime, endTime);
-    return this.bookService.book(subject, description, date.start, date.end);
+    this.book = new Booking(subject, description, date.start, date.end);
+    return this.bookService.book(this.book);
   }
 
   private onViewBookingResult(result: Response) {
@@ -134,11 +137,14 @@ export class CalendarBodyCellDialogComponent implements OnInit {
   }
 
   get response(): Response {
-    return this.overlappingResponse;
+    return this.resp;
   }
 
   set response(result: Response) {
-    this.overlappingResponse = result;
+    this.resp = result;
   }
 
+  get booking() {
+    return this.book;
+  }
 }

@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CalendarHeaderComponent} from './calendar-header.component';
 import {MatSnackBar, MatSnackBarContainer, MatToolbar} from '@angular/material';
-import {DataService} from '../data.service';
+import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
 
 describe('CalendarHeaderComponent', () => {
@@ -12,7 +12,7 @@ describe('CalendarHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CalendarHeaderComponent, MatToolbar, MatSnackBarContainer],
-      providers: [DataService, MatSnackBar, Overlay]
+      providers: [HeaderBodyCoordinator, MatSnackBar, Overlay]
     })
       .compileComponents();
   }));

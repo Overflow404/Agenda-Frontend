@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateManager} from '../date/DateManager';
-import {DataService} from '../data.service';
-import {first} from 'rxjs/operators';
+import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 
 @Component({
   selector: 'app-calendar-body',
@@ -12,10 +11,9 @@ export class CalendarBodyComponent implements OnInit {
 
   @Input() private currentDate: Date;
   @Input() private columns: number;
-  private dates;
+  private content;
 
-  constructor(private dateManager: DateManager,
-              private data: DataService) {
+  constructor(private coordinator: HeaderBodyCoordinator) {
   }
 
   ngOnInit() {
@@ -23,7 +21,7 @@ export class CalendarBodyComponent implements OnInit {
   }
 
   private subscribeOnViewChange() {
-    this.data.currentDate.subscribe(date => {
+    this.coordinator.currentDate.subscribe(date => {
       this.clearAgenda();
       this.setAgendaDate(date);
       this.fillAgenda();
@@ -31,7 +29,7 @@ export class CalendarBodyComponent implements OnInit {
   }
 
   private clearAgenda() {
-    this.dates = [];
+    this.content = [];
   }
 
   private setAgendaDate(date: Date) {
@@ -50,13 +48,19 @@ export class CalendarBodyComponent implements OnInit {
     const month = this.date.getMonth();
     const year = this.date.getFullYear();
 
-
-
     for (let day = startDayToDisplayInAgenda; day <= lastDayToDisplayInAgenda; day++) {
-      if (this.isADayOfCurrentMonth(day)) {
-        this.dates.push({date: new Date(year, month, day), enabled: true });
+      if (DateManager.isADayOfCurrentMonth(this.date, day)) {
+        this.content.push({
+          date: new Date(year, month, day),
+          enabled: true,
+          chips: []
+        });
       } else {
-        this.dates.push({date: new Date(year, month, day), enabled: false });
+        this.content.push({
+          date: new Date(year, month, day),
+          enabled: false,
+          chips: []
+        });
       }
     }
   }
@@ -67,9 +71,5 @@ export class CalendarBodyComponent implements OnInit {
 
   set date(value: Date) {
     this.currentDate = value;
-  }
-
-  private isADayOfCurrentMonth(day: number) {
-    return day > 0 && day <= DateManager.lastDayOfMonth(this.date).getDate();
   }
 }

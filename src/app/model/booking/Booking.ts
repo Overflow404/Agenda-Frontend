@@ -2,15 +2,14 @@ export class Booking {
 
   subject: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  start: number;
+  end: number;
 
-  constructor(subject: string, description: string, startDate: Date, endDate: Date) {
+  constructor(subject: string, description: string, startDate: number, endDate: number) {
     this.subject = subject;
     this.description = description;
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.start = startDate;
+    this.end = endDate;
   }
 
 }
-

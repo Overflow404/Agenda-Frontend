@@ -1,7 +1,15 @@
 import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatCardModule, MatDialogModule, MatGridListModule, MatInputModule, MatSnackBarContainer, MatToolbar} from '@angular/material';
+import {
+  MatCardModule,
+  MatChip, MatChipsModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSnackBarContainer,
+  MatToolbar
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CalendarComponent} from './calendar/calendar.component';
 import {CalendarHeaderComponent} from './calendar-header/calendar-header.component';
@@ -11,7 +19,7 @@ import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog/calen
 import {CalendarTrailerComponent} from './calendar-trailer/calendar-trailer.component';
 import {OverlappingService} from './service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
-import {DataService} from './data.service';
+import {HeaderBodyCoordinator} from './coordinator/HeaderBodyCoordinator';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -22,7 +30,8 @@ describe('AppComponent', () => {
         MatDialogModule,
         MatCardModule,
         MatGridListModule,
-        BrowserAnimationsModule],
+        BrowserAnimationsModule,
+        MatChipsModule],
       declarations: [
         AppComponent,
         CalendarComponent,
@@ -31,12 +40,13 @@ describe('AppComponent', () => {
         CalendarBodyCellComponent,
         CalendarBodyCellDialogComponent,
         CalendarTrailerComponent,
+        MatSnackBarContainer,
         MatToolbar],
       providers: [
         OverlappingService,
         HttpClient,
         HttpHandler,
-        DataService]
+        HeaderBodyCoordinator]
     }).compileComponents();
   }));
 

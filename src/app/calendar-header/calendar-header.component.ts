@@ -1,5 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {DataService} from '../data.service';
+import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {DateManager} from '../date/DateManager';
 
 @Component({
@@ -13,7 +13,7 @@ export class CalendarHeaderComponent implements OnInit {
 
   private currentDate: Date;
 
-  constructor(private data: DataService,
+  constructor(private data: HeaderBodyCoordinator,
               private dateManager: DateManager) { }
 
   ngOnInit() {

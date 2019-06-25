@@ -10,14 +10,14 @@ import { CalendarBodyCellComponent } from './calendar-body-cell/calendar-body-ce
 import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatChipList, MatChipsModule,
   MatDialogModule,
   MatGridListModule,
-  MatInputModule,
+  MatInputModule, MatListModule,
   MatSlideToggleModule, MatSnackBar, MatSnackBarContainer, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material/';
-import {DataService} from './data.service';
+import {HeaderBodyCoordinator} from './coordinator/HeaderBodyCoordinator';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarBodyCellDialogComponent } from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
@@ -26,6 +26,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {OverlappingService} from './service/overlapping/OverlappingService';
 import {Overlay} from '@angular/cdk/overlay';
 import {BookingService} from './service/booking/BookingService';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { CalendarShowDetailsDialogComponent } from './calendar-show-details-dialog/calendar-show-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {BookingService} from './service/booking/BookingService';
     CalendarBodyComponent,
     CalendarTrailerComponent,
     CalendarBodyCellComponent,
-    CalendarBodyCellDialogComponent
+    CalendarBodyCellDialogComponent,
+    CalendarShowDetailsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,13 +55,17 @@ import {BookingService} from './service/booking/BookingService';
     HttpClientModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-  ],
-  entryComponents: [
-    CalendarBodyCellDialogComponent
+    MatChipsModule,
+    ScrollingModule,
+    MatListModule,
 
   ],
-  providers: [DataService, OverlappingService, BookingService, MatSnackBar, Overlay,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
+  entryComponents: [
+    CalendarBodyCellDialogComponent, CalendarShowDetailsDialogComponent
+
+  ],
+  providers: [HeaderBodyCoordinator, OverlappingService, MatSnackBar, Overlay,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}, BookingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

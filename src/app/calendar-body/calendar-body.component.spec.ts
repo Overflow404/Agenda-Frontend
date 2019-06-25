@@ -3,10 +3,10 @@ import {CalendarBodyComponent} from './calendar-body.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   MatCardModule,
+  MatChipsModule,
   MatDialogModule,
   MatGridListModule,
-  MatInputModule,
-  MatSnackBar,
+  MatInputModule, MatSnackBar,
   MatSnackBarContainer,
   MatToolbar
 } from '@angular/material';
@@ -18,7 +18,7 @@ import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/cale
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
-import {DataService} from '../data.service';
+import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
 import {BookingService} from '../service/booking/BookingService';
 
@@ -34,7 +34,8 @@ describe('CalendarBodyComponent', () => {
         MatDialogModule,
         MatCardModule,
         MatGridListModule,
-        BrowserAnimationsModule],
+        BrowserAnimationsModule,
+        MatChipsModule],
       declarations: [
         CalendarComponent,
         CalendarHeaderComponent,
@@ -49,8 +50,9 @@ describe('CalendarBodyComponent', () => {
         BookingService,
         HttpClient,
         HttpHandler,
-        DataService,
         MatSnackBar,
+        HeaderBodyCoordinator,
+        MatSnackBarContainer,
         Overlay]
     })
       .compileComponents();

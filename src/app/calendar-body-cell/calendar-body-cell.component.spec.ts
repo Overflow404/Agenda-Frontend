@@ -3,11 +3,12 @@ import { CalendarBodyCellComponent } from './calendar-body-cell.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   MatCardModule,
+  MatChipsModule,
   MatDialogModule,
   MatGridListModule,
   MatInputModule,
   MatSnackBar,
-  MatSnackBarContainer,
+  MatSnackBarContainer, MatSnackBarModule,
   MatToolbar
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -18,9 +19,10 @@ import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/cale
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
-import {DataService} from '../data.service';
+import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
 import {BookingService} from '../service/booking/BookingService';
+import {DateManager} from '../date/DateManager';
 
 describe('CalendarBodyCellComponent', () => {
   let component: CalendarBodyCellComponent;
@@ -34,7 +36,9 @@ describe('CalendarBodyCellComponent', () => {
         MatDialogModule,
         MatCardModule,
         MatGridListModule,
-        BrowserAnimationsModule],
+        BrowserAnimationsModule,
+        MatSnackBarModule,
+        MatChipsModule],
       declarations: [
         CalendarComponent,
         CalendarHeaderComponent,
@@ -42,16 +46,16 @@ describe('CalendarBodyCellComponent', () => {
         CalendarBodyCellComponent,
         CalendarBodyCellDialogComponent,
         CalendarTrailerComponent,
-        MatToolbar,
-        MatSnackBarContainer],
+        MatToolbar],
       providers: [
         OverlappingService,
+        DateManager,
         HttpClient,
         BookingService,
         HttpHandler,
-        DataService,
+        HeaderBodyCoordinator,
         MatSnackBar,
-        Overlay]
+        Overlay, MatSnackBarContainer]
     })
     .compileComponents();
   }));

@@ -16,10 +16,16 @@ mat-card {
   mat-card-subtitle {
     animation: fadeout 1s forwards;
   }
+  mat-card-content {
+    animation: fadeout 1s forwards;
+  }
 }
 
 @media only screen and (min-width: 701px) {
   mat-card-subtitle {
+    animation: fadein 1s forwards;
+  }
+  mat-card-content {
     animation: fadein 1s forwards;
   }
 }

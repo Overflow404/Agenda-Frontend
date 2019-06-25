@@ -39,10 +39,18 @@ export class DateManager {
   }
 
   static daysToMonday(firstDayOfMonth: Date) {
-    if (firstDayOfMonth.getDay() !== 0) {
-      return firstDayOfMonth.getDay() - 1;
+    switch (firstDayOfMonth.getDay()) {
+      case 0:
+        return 6;
+      case 1:
+        return 0;
+      default:
+        return firstDayOfMonth.getDay() - 1;
     }
-    return 0;
+  }
+
+  static isADayOfCurrentMonth(date: Date, day: number) {
+    return day > 0 && day <= DateManager.lastDayOfMonth(date).getDate();
   }
 
   getWeekDayFromNumber(day: number) {

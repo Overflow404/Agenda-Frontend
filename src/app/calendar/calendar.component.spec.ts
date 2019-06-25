@@ -3,10 +3,14 @@ import {CalendarComponent} from './calendar.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   MatCardModule,
+  MatChipsModule,
   MatDialogModule,
   MatGridListModule,
-  MatInputModule, MatSnackBar, MatSnackBarContainer,
-  MatToolbar
+  MatInputModule,
+  MatSnackBar,
+  MatSnackBarContainer, MatSnackBarModule,
+  MatToolbar,
+  MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {OverlappingService} from '../service/overlapping/OverlappingService';
@@ -16,8 +20,9 @@ import {CalendarBodyComponent} from '../calendar-body/calendar-body.component';
 import {CalendarBodyCellComponent} from '../calendar-body-cell/calendar-body-cell.component';
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
-import {DataService} from '../data.service';
+import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
+import {BookingService} from '../service/booking/BookingService';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -27,26 +32,27 @@ describe('CalendarComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        BrowserAnimationsModule,
         MatInputModule,
         MatDialogModule,
         MatCardModule,
         MatGridListModule,
-        BrowserAnimationsModule],
+        MatToolbarModule,
+        MatChipsModule,
+        MatSnackBarModule],
       declarations: [
         CalendarComponent,
         CalendarHeaderComponent,
         CalendarBodyComponent,
         CalendarBodyCellComponent,
         CalendarBodyCellDialogComponent,
-        CalendarTrailerComponent,
-        MatToolbar,
-        MatSnackBarContainer],
+        CalendarTrailerComponent],
       providers: [
         OverlappingService,
         HttpClient,
         HttpHandler,
-        DataService,
-        MatSnackBar,
+        HeaderBodyCoordinator,
+        BookingService,
         Overlay]
     })
       .compileComponents();
