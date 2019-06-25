@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Manage bookings for
+  {{ date.getDate() + ' ' + dateManager.getMonthName(date.getMonth()) }}
+</h2>
+
+<mat-dialog-content>
+  <p>
+    <mat-form-field class="full-width">
+      <label>
+        <input disabled="true" placeholder="Subject" value="{{content.subject}}" matInput>
+      </label>
+
+    </mat-form-field>
+  </p>
+
+
+  <p>
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <label>
+          <textarea value="{{content.description}}"disabled="true" placeholder="Description"
+                    matInput cdkTextareaAutosize maxlength="64" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3">
+
+          </textarea>
+      </label>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field class="full-width">
+      <label>
+        <input matInput value="{{startDate}}"disabled="true" type="time" placeholder="Start date">
+      </label>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field class="full-width">
+      <label>
+        <input matInput value="{{endDate}}"disabled="true" type="time" placeholder="End date">
+      </label>
+    </mat-form-field>
+  </p>
+</mat-dialog-content>
