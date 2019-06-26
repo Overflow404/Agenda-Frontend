@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {DateManager} from '../../date/DateManager';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OverlappingService} from '../../service/OverlappingService';
-import {Response} from '../../model/Response';
 import {MatSnackBar} from '@angular/material';
 import {BookingService} from '../../service/BookingService';
 import {Booking} from '../../model/Booking';
@@ -106,7 +105,7 @@ export class CalendarBodyCellDialogComponent implements OnInit {
       const date = this.createSlot(startTime, endTime);
       if (date.start > date.end || date.start === date.end) {
         this.wrongDatesOrder = true;
-        this.snackBar.open(Response.START_AFTER_END, 'X');
+        this.snackBar.open('Start date must be greater than end date!', 'X');
       } else {
         this.wrongDatesOrder = false;
       }

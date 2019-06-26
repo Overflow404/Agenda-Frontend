@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
-export class HeaderBodyCoordinator {
+export class CalendarHeaderToBodyCoordinator {
 
   private dateSource = new BehaviorSubject(new Date(Date.now()));
   currentDate = this.dateSource.asObservable();

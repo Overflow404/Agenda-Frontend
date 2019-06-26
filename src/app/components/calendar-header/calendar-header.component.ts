@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 
 import {DateManager} from '../../date/DateManager';
-import {HeaderBodyCoordinator} from '../../coordinator/HeaderBodyCoordinator';
+import {CalendarHeaderToBodyCoordinator} from '../../coordinator/CalendarHeaderToBodyCoordinator';
 
 @Component({
   selector: 'app-calendar-header',
@@ -14,7 +14,7 @@ export class CalendarHeaderComponent implements OnInit {
 
   private currentDate: Date;
 
-  constructor(private data: HeaderBodyCoordinator,
+  constructor(private data: CalendarHeaderToBodyCoordinator,
               private dateManager: DateManager) { }
 
   ngOnInit() {

@@ -7,22 +7,18 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
-  MatLabel,
   MatSnackBarModule,
   MatToolbarModule,
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RegistrationService} from './service/RegistrationService';
-import {HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {OverlappingService} from './service/OverlappingService';
 import {BookingService} from './service/BookingService';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HeaderBodyCoordinator} from './coordinator/HeaderBodyCoordinator';
-import {CalendarBodyCellComponent} from './components/calendar-body-cell/calendar-body-cell.component';
-import {CalendarHeaderComponent} from './components/calendar-header/calendar-header.component';
-import {CalendarBodyComponent} from './components/calendar-body/calendar-body.component';
+import {CalendarHeaderToBodyCoordinator} from './coordinator/CalendarHeaderToBodyCoordinator';
 
 @NgModule({
   imports: [
@@ -64,7 +60,7 @@ import {CalendarBodyComponent} from './components/calendar-body/calendar-body.co
     OverlappingService,
     BookingService,
     RegistrationService,
-    HeaderBodyCoordinator
+    CalendarHeaderToBodyCoordinator
     ],
   entryComponents: [
 

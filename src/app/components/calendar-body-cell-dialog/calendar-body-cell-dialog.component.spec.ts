@@ -1,14 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatDialogContent, MatDialogActions, MatInputModule, MatSnackBar, MatSnackBarContainer} from '@angular/material';
 import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {OverlappingService} from '../../service/OverlappingService';
-import {HttpClient, HttpHandler} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {of} from 'rxjs';
-import {Overlay} from '@angular/cdk/overlay';
-import {Response} from '../../model/Response';
-import {BookingService} from '../../service/BookingService';
 import {MaterialModule} from '../../material.module';
 
 describe('CalendarBodyCellDialogComponent', () => {

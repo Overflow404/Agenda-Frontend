@@ -17,7 +17,7 @@ import {
   MatSlideToggleModule, MatSnackBar, MatSnackBarContainer, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material/';
-import {HeaderBodyCoordinator} from './coordinator/HeaderBodyCoordinator';
+import {CalendarHeaderToBodyCoordinator} from './coordinator/CalendarHeaderToBodyCoordinator';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CalendarBodyCellDialogComponent} from './components/calendar-body-cell-dialog/calendar-body-cell-dialog.component';
@@ -80,7 +80,7 @@ import {RegistrationService} from './service/RegistrationService';
     CalendarBodyCellDialogComponent, CalendarShowDetailsDialogComponent
 
   ],
-  providers: [HeaderBodyCoordinator, OverlappingService, MatSnackBar, Overlay, RegistrationService,
+  providers: [CalendarHeaderToBodyCoordinator, OverlappingService, MatSnackBar, Overlay, RegistrationService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}, BookingService],
   bootstrap: [AppComponent]
 })

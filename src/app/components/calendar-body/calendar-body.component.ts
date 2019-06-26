@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateManager} from '../../date/DateManager';
-import {HeaderBodyCoordinator} from '../../coordinator/HeaderBodyCoordinator';
+import {CalendarHeaderToBodyCoordinator} from '../../coordinator/CalendarHeaderToBodyCoordinator';
 
 @Component({
   selector: 'app-calendar-body',
@@ -13,7 +13,7 @@ export class CalendarBodyComponent implements OnInit {
   @Input() private columns: number;
   private content;
 
-  constructor(private coordinator: HeaderBodyCoordinator) {
+  constructor(private coordinator: CalendarHeaderToBodyCoordinator) {
   }
 
   ngOnInit() {
