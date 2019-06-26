@@ -1,0 +1,17 @@
+
+.full-width {
+  width: 100%;
+}
+.center-component {
+  position:absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+p {
+  width: 400px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
