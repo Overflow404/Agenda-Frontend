@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RegistrationService} from '../service/RegistrationService';
-import {User} from '../model/User';
+import {RegistrationService} from '../../service/RegistrationService';
+import {User} from '../../model/User';
 import {MatSnackBar} from '@angular/material';
 import HTTP_STATUS_CODES from 'http-status-enum';
 

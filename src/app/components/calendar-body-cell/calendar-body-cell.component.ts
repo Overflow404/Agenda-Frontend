@@ -3,7 +3,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {Booking} from '../../model/Booking';
 import {BookingService} from '../../service/BookingService';
-import {Response} from '../../service/Response';
+import {Response} from '../../model/Response';
 import {DateManager} from '../../date/DateManager';
 import {CalendarShowDetailsDialogComponent} from '../calendar-show-details-dialog/calendar-show-details-dialog.component';
 
@@ -53,9 +53,9 @@ export class CalendarBodyCellComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.date = this.date;
     dialogRef.afterClosed().subscribe(() => {
-      if (this.successfulBooking(instance)) {
-        this.chipsList.push(instance.booking);
-      }
+
+      this.chipsList.push(instance.booking);
+
     });
   }
 
@@ -65,11 +65,6 @@ export class CalendarBodyCellComponent implements OnInit {
 
   set date(value: Date) {
     this.currentDate = value;
-  }
-
-
-  private successfulBooking(instance: CalendarBodyCellDialogComponent) {
-    return instance.response !== null && instance.response.result === Response.SUCCESS;
   }
 
   showDetails(chip) {

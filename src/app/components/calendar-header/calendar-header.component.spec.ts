@@ -1,9 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CalendarHeaderComponent} from './calendar-header.component';
-import {MatSnackBar, MatSnackBarContainer, MatToolbar} from '@angular/material';
-import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
-import {Overlay} from '@angular/cdk/overlay';
+import {MaterialModule} from '../../material.module';
 
 describe('CalendarHeaderComponent', () => {
   let component: CalendarHeaderComponent;
@@ -11,8 +9,8 @@ describe('CalendarHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CalendarHeaderComponent, MatToolbar, MatSnackBarContainer],
-      providers: [HeaderBodyCoordinator, MatSnackBar, Overlay]
+      declarations: [CalendarHeaderComponent],
+      imports: [MaterialModule],
     })
       .compileComponents();
   }));

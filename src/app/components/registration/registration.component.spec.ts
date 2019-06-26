@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistrationComponent } from './registration.component';
+import {MaterialModule} from '../../material.module';
+import {MatFormFieldModule, MatLabel} from '@angular/material';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -8,6 +10,7 @@ describe('RegistrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [ RegistrationComponent ]
     })
     .compileComponents();

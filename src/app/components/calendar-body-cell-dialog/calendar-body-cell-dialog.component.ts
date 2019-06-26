@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DateManager} from '../../date/DateManager';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OverlappingService} from '../../service/OverlappingService';
-import {Response} from '../../service/Response';
+import {Response} from '../../model/Response';
 import {MatSnackBar} from '@angular/material';
 import {BookingService} from '../../service/BookingService';
 import {Booking} from '../../model/Booking';
@@ -66,7 +66,7 @@ export class CalendarBodyCellDialogComponent implements OnInit {
 
   private onViewOverlappingResult() {
     this.getBookingData().subscribe(
-      () => { this.onViewBookingResult(); },
+      (res) => { this.onViewBookingResult(res); },
       error => { this.onViewError(error); }
     );
   }
@@ -96,9 +96,8 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return this.bookService.book(this.book);
   }
 
-  private onViewBookingResult() {
+  private onViewBookingResult(res) {
       this.snackBar.open('Booking confirmed!', 'X');
-
   }
 
   checkDatesOrder() {
