@@ -1,65 +1,65 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {CalendarBodyComponent} from './calendar-body.component';
+import {CalendarComponent} from './calendar.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   MatCardModule,
   MatChipsModule,
   MatDialogModule,
   MatGridListModule,
-  MatInputModule, MatSnackBar,
-  MatSnackBarContainer,
-  MatToolbar
+  MatInputModule,
+  MatSnackBar,
+  MatSnackBarContainer, MatSnackBarModule,
+  MatToolbar,
+  MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CalendarComponent} from '../calendar/calendar.component';
+import {OverlappingService} from '../../service/OverlappingService';
+import {HttpClient, HttpHandler} from '@angular/common/http';
 import {CalendarHeaderComponent} from '../calendar-header/calendar-header.component';
+import {CalendarBodyComponent} from '../calendar-body/calendar-body.component';
 import {CalendarBodyCellComponent} from '../calendar-body-cell/calendar-body-cell.component';
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
 import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
-import {OverlappingService} from '../service/OverlappingService';
-import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
 import {Overlay} from '@angular/cdk/overlay';
-import {BookingService} from '../service/BookingService';
+import {BookingService} from '../../service/BookingService';
 
-describe('CalendarBodyComponent', () => {
-  let component: CalendarBodyComponent;
-  let fixture: ComponentFixture<CalendarBodyComponent>;
+describe('CalendarComponent', () => {
+  let component: CalendarComponent;
+  let fixture: ComponentFixture<CalendarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        BrowserAnimationsModule,
         MatInputModule,
         MatDialogModule,
         MatCardModule,
         MatGridListModule,
-        BrowserAnimationsModule,
-        MatChipsModule],
+        MatToolbarModule,
+        MatChipsModule,
+        MatSnackBarModule],
       declarations: [
         CalendarComponent,
         CalendarHeaderComponent,
         CalendarBodyComponent,
         CalendarBodyCellComponent,
         CalendarBodyCellDialogComponent,
-        CalendarTrailerComponent,
-        MatToolbar,
-        MatSnackBarContainer],
+        CalendarTrailerComponent],
       providers: [
         OverlappingService,
-        BookingService,
         HttpClient,
         HttpHandler,
-        MatSnackBar,
         HeaderBodyCoordinator,
-        MatSnackBarContainer,
+        BookingService,
         Overlay]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CalendarBodyComponent);
+    fixture = TestBed.createComponent(CalendarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -67,5 +67,4 @@ describe('CalendarBodyComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {CalendarBodyCellDialogComponent} from '../calendar-body-cell-dialog/calendar-body-cell-dialog.component';
-import {Booking} from '../model/Booking';
-import {BookingService} from '../service/BookingService';
-import {Response} from '../service/Response';
-import {DateManager} from '../date/DateManager';
+import {Booking} from '../../model/Booking';
+import {BookingService} from '../../service/BookingService';
+import {Response} from '../../service/Response';
+import {DateManager} from '../../date/DateManager';
 import {CalendarShowDetailsDialogComponent} from '../calendar-show-details-dialog/calendar-show-details-dialog.component';
 
 @Component({
@@ -37,15 +37,11 @@ export class CalendarBodyCellComponent implements OnInit {
       return this.bookingService.retrieveBookings(this.date);
   }
 
-  private onViewResult(result: Response) {
-    const response = result as Response;
-    if (this.successful(response)) {
-      const bookings = response.content as unknown as Booking[];
-      bookings.forEach(book => {
-        this.chipsList.push(book);
-      });
+  private onViewResult(result: Booking[]) {
+    result.forEach(booking => {
+      this.chipsList.push(booking);
+    });
 
-    }
   }
 
   private onViewError(error) {
@@ -71,9 +67,6 @@ export class CalendarBodyCellComponent implements OnInit {
     this.currentDate = value;
   }
 
-  private successful(response: Response) {
-    return response.result === Response.SUCCESS && response.content.length > 0;
-  }
 
   private successfulBooking(instance: CalendarBodyCellDialogComponent) {
     return instance.response !== null && instance.response.result === Response.SUCCESS;

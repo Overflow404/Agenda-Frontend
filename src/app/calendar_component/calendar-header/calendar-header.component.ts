@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
-import {DateManager} from '../date/DateManager';
+import {DateManager} from '../../date/DateManager';
 
 @Component({
   selector: 'app-calendar-header',

@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {DateManager} from '../date/DateManager';
+import {DateManager} from '../../date/DateManager';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {OverlappingService} from '../service/OverlappingService';
-import {Response} from '../service/Response';
+import {OverlappingService} from '../../service/OverlappingService';
+import {Response} from '../../service/Response';
 import {MatSnackBar} from '@angular/material';
-import {BookingService} from '../service/BookingService';
-import {Booking} from '../model/Booking';
+import {BookingService} from '../../service/BookingService';
+import {Booking} from '../../model/Booking';
+import HTTP_STATUS_CODES from 'http-status-enum';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',
@@ -42,7 +43,7 @@ export class CalendarBodyCellDialogComponent implements OnInit {
 
   onFormSubmit() {
     this.getOverlappingData().subscribe(
-      result => { this.onViewOverlappingResult(result); },
+      () => { this.onViewOverlappingResult(); },
       error => { this.onViewError(error); }
     );
   }
@@ -63,25 +64,30 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return {start: startDate, end: endDate};
   }
 
-  private onViewOverlappingResult(result: Response) {
-    this.response = result as Response;
-    if (this.response.result === Response.FAILURE) {
-      this.snackBar.open(this.response.failureReason, 'X');
-    } else {
-      this.confirmBooking();
-    }
-  }
-
-  private onViewError(error) {
-    this.snackBar.open('Error: ' + error.status, 'X');
-  }
-
-  private confirmBooking() {
+  private onViewOverlappingResult() {
     this.getBookingData().subscribe(
-      result => { this.onViewBookingResult(result); },
+      () => { this.onViewBookingResult(); },
       error => { this.onViewError(error); }
     );
   }
+
+  private onViewError(error) {
+    switch (error.status) {
+      case HTTP_STATUS_CODES.CONFLICT:
+        this.snackBar.open('This time slot is already booked!', 'X');
+        break;
+      case HTTP_STATUS_CODES.PARTIAL_CONTENT:
+        this.snackBar.open('Empty or null fields!', 'X');
+        break;
+      case HTTP_STATUS_CODES.BAD_REQUEST:
+        this.snackBar.open('End time is greater than start time!', 'X');
+        break;
+      default:
+        this.snackBar.open('Unknown error: ' + error.status, 'X');
+    }
+
+  }
+
 
   getBookingData() {
     const {subject, description, startTime, endTime} = this.bookingForm.value;
@@ -90,13 +96,9 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return this.bookService.book(this.book);
   }
 
-  private onViewBookingResult(result: Response) {
-    this.response = result as Response;
-    if (this.response.result === Response.FAILURE) {
-      this.snackBar.open(this.response.failureReason, 'X');
-    } else {
-      this.snackBar.open(this.response.content, 'X');
-    }
+  private onViewBookingResult() {
+      this.snackBar.open('Booking confirmed!', 'X');
+
   }
 
   checkDatesOrder() {

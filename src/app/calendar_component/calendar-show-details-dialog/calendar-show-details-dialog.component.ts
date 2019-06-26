@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DateManager} from '../date/DateManager';
+import {DateManager} from '../../date/DateManager';
 
 @Component({
   selector: 'app-calendar-show-details-dialog',

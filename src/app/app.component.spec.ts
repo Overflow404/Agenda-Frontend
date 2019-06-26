@@ -11,15 +11,15 @@ import {
   MatToolbar
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CalendarComponent} from './calendar/calendar.component';
-import {CalendarHeaderComponent} from './calendar-header/calendar-header.component';
-import {CalendarBodyComponent} from './calendar-body/calendar-body.component';
-import {CalendarBodyCellComponent} from './calendar-body-cell/calendar-body-cell.component';
-import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog/calendar-body-cell-dialog.component';
-import {CalendarTrailerComponent} from './calendar-trailer/calendar-trailer.component';
+import {CalendarComponent} from './calendar_component/calendar/calendar.component';
+import {CalendarHeaderComponent} from './calendar_component/calendar-header/calendar-header.component';
+import {CalendarBodyComponent} from './calendar_component/calendar-body/calendar-body.component';
+import {CalendarBodyCellComponent} from './calendar_component/calendar-body-cell/calendar-body-cell.component';
+import {CalendarBodyCellDialogComponent} from './calendar_component/calendar-body-cell-dialog/calendar-body-cell-dialog.component';
+import {CalendarTrailerComponent} from './calendar_component/calendar-trailer/calendar-trailer.component';
 import {OverlappingService} from './service/OverlappingService';
 import {HttpClient, HttpHandler} from '@angular/common/http';
-import {HeaderBodyCoordinator} from './coordinator/HeaderBodyCoordinator';
+import {HeaderBodyCoordinator} from './calendar_component/coordinator/HeaderBodyCoordinator';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

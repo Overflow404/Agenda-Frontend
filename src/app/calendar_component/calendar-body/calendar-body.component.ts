@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DateManager} from '../date/DateManager';
 import {HeaderBodyCoordinator} from '../coordinator/HeaderBodyCoordinator';
+import {DateManager} from '../../date/DateManager';
 
 @Component({
   selector: 'app-calendar-body',
