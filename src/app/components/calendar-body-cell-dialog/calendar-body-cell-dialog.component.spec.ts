@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CalendarBodyCellDialogComponent} from './calendar-body-cell-dialog.component';
-import {MaterialModule} from '../../material.module';
+import {MaterialModule} from '../../configuration/material.module';
 
 describe('CalendarBodyCellDialogComponent', () => {
   let component: CalendarBodyCellDialogComponent;
@@ -92,19 +92,6 @@ describe('CalendarBodyCellDialogComponent', () => {
     expect(component.form.valid).toBeFalsy();
   });
 
-/*  it('should appear error if time slot is busy', () => {
-    const result = Response.failure(Response.BUSY_SLOT);
-
-    spyOn(component, 'getOverlappingData').and.returnValue(of(result));
-    spyOn(component, 'createSlot').and.returnValue({
-      start: 1559131200000, /!* Wed May 29 2019 12:00:00 UTC *!/
-      end: 1559145600000 /!* Wed May 29 2019 16:00:00 UTC *!/
-    });
-
-    component.onFormSubmit();
-
-    expect(component.response.result).toBe('FAILURE');
-  });*/
 
 });
 

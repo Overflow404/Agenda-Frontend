@@ -1,5 +1,4 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-
 import {DateManager} from '../../date/DateManager';
 import {CalendarHeaderToBodyCoordinator} from '../../coordinator/CalendarHeaderToBodyCoordinator';
 

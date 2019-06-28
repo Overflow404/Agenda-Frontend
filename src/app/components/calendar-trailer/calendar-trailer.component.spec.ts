@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalendarTrailerComponent } from './calendar-trailer.component';
-import {MaterialModule} from '../../material.module';
+import {MaterialModule} from '../../configuration/material.module';
 
 describe('CalendarTrailerComponent', () => {
   let component: CalendarTrailerComponent;

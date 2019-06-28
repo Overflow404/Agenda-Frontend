@@ -10,7 +10,7 @@ import {CalendarBodyCellComponent} from './components/calendar-body-cell/calenda
 import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatButtonModule,
-  MatCardModule, MatChipList, MatChipsModule,
+  MatCardModule, MatCheckboxModule, MatChipList, MatChipsModule,
   MatDialogModule,
   MatGridListModule,
   MatInputModule, MatLabel, MatListModule,
@@ -33,6 +33,9 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {LoginComponent} from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import {RegistrationService} from './service/RegistrationService';
+import {LoginService} from './service/LoginService';
+import {JWT_OPTIONS, JwtHelperService, JwtModule} from '@auth0/angular-jwt';
+import {CalendarToolbarToHomeToolbarCoordinator} from './coordinator/CalendarToolbarToHomeToolbarCoordinator';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,7 @@ import {RegistrationService} from './service/RegistrationService';
   ],
   imports: [
     RouterModule.forRoot([
-      { path: '', redirectTo: '/', pathMatch: 'full' },
+      {path: '', redirectTo: '/', pathMatch: 'full'},
       {path: 'calendar', component: CalendarComponent},
       {path: 'register', component: RegistrationComponent},
       {path: 'login', component: LoginComponent}]),
@@ -59,7 +62,6 @@ import {RegistrationService} from './service/RegistrationService';
     MatButtonModule,
     MatGridListModule,
     MatCardModule,
-
     MatToolbarModule,
     MatInputModule,
     FormsModule,
@@ -74,6 +76,7 @@ import {RegistrationService} from './service/RegistrationService';
     ScrollingModule,
     MatListModule,
     RouterModule,
+    MatCheckboxModule,
 
   ],
   entryComponents: [
@@ -81,8 +84,10 @@ import {RegistrationService} from './service/RegistrationService';
 
   ],
   providers: [CalendarHeaderToBodyCoordinator, OverlappingService, MatSnackBar, Overlay, RegistrationService,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}, BookingService],
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}, BookingService, LoginService, JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, CalendarToolbarToHomeToolbarCoordinator],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

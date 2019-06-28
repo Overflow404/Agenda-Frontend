@@ -5,6 +5,9 @@ import {Booking} from '../../model/Booking';
 import {BookingService} from '../../service/BookingService';
 import {DateManager} from '../../date/DateManager';
 import {CalendarShowDetailsDialogComponent} from '../calendar-show-details-dialog/calendar-show-details-dialog.component';
+import {CellContent} from '../../model/CellContent';
+import {Router} from '@angular/router';
+import HTTP_STATUS_CODES from 'http-status-enum';
 
 @Component({
   selector: 'app-calendar-body-cell',
@@ -14,37 +17,52 @@ import {CalendarShowDetailsDialogComponent} from '../calendar-show-details-dialo
 
 export class CalendarBodyCellComponent implements OnInit {
 
-  @Input() private currentDate: Date;
-  @Input() private enabled: boolean;
-  private chipsList;
+  @Input() private cellContent: CellContent;
+  private dialogRef;
 
   constructor(private bookingService: BookingService,
               private dateManager: DateManager,
-              private snackBar: MatSnackBar,
-              public dialog: MatDialog) {
-    this.chipsList = [];
+              private router: Router,
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     this.getBookingsForCurrentDay().subscribe(
-      result => { this.onViewResult(result); },
-      error => { this.onViewError(error); }
+      result => {
+        this.onViewResult(result);
+      },
+      (error) => {
+        this.onViewError(error);
+      }
     );
   }
 
   private getBookingsForCurrentDay() {
-      return this.bookingService.retrieveBookings(this.date);
+    return this.bookingService.retrieveBookings(this.date);
   }
 
   private onViewResult(result: Booking[]) {
     result.forEach(booking => {
-      this.chipsList.push(booking);
+      if (booking !== undefined) {
+        this.cellContent.addChip(booking);
+      }
     });
 
   }
 
   private onViewError(error) {
-    this.snackBar.open('Error: ' + error.statusText, 'X');
+    switch (error.status) {
+      case HTTP_STATUS_CODES.UNAUTHORIZED:
+        this.snackBar.open('Login please!', 'X');
+        this.router.navigateByUrl('/login');
+        break;
+      case HTTP_STATUS_CODES.PRECONDITION_FAILED:
+        this.snackBar.open(error.error, 'X');
+        break;
+      default:
+        this.snackBar.open('Unknown error: ' + error.status, 'X');
+    }
   }
 
   private doubleClickCallback() {
@@ -52,26 +70,23 @@ export class CalendarBodyCellComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.date = this.date;
     dialogRef.afterClosed().subscribe(() => {
-
-      if (instance.booking !== undefined) {
-        this.chipsList.push(instance.booking);
-      }
+      this.onViewResult([instance.booking]);
     });
   }
 
-  get date(): Date {
-    return this.currentDate;
-  }
-
-  set date(value: Date) {
-    this.currentDate = value;
-  }
-
   showDetails(chip) {
-    const dialogRef = this.dialog.open(CalendarShowDetailsDialogComponent);
-    const instance = dialogRef.componentInstance;
+    this.dialogRef = this.dialog.open(CalendarShowDetailsDialogComponent);
+    const instance = this.dialogRef.componentInstance;
     instance.date = this.date;
     instance.content = chip;
+  }
+
+  get date(): Date {
+    return this.cellContent.date;
+  }
+
+  set date(date: Date) {
+    this.cellContent.date = date;
   }
 }
 

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateManager} from '../../date/DateManager';
 import {CalendarHeaderToBodyCoordinator} from '../../coordinator/CalendarHeaderToBodyCoordinator';
+import {CellContent} from '../../model/CellContent';
 
 @Component({
   selector: 'app-calendar-body',
@@ -11,16 +12,16 @@ export class CalendarBodyComponent implements OnInit {
 
   @Input() private currentDate: Date;
   @Input() private columns: number;
-  private content;
+  private content: CellContent[];
 
   constructor(private coordinator: CalendarHeaderToBodyCoordinator) {
   }
 
   ngOnInit() {
-    this.subscribeOnViewChange();
+    this.onMonthChange();
   }
 
-  private subscribeOnViewChange() {
+  private onMonthChange() {
     this.coordinator.currentDate.subscribe(date => {
       this.clearAgenda();
       this.setAgendaDate(date);
@@ -50,17 +51,9 @@ export class CalendarBodyComponent implements OnInit {
 
     for (let day = startDayToDisplayInAgenda; day <= lastDayToDisplayInAgenda; day++) {
       if (DateManager.isADayOfCurrentMonth(this.date, day)) {
-        this.content.push({
-          date: new Date(year, month, day),
-          enabled: true,
-          chips: []
-        });
+        this.content.push(new CellContent(new Date(year, month, day), true, []));
       } else {
-        this.content.push({
-          date: new Date(year, month, day),
-          enabled: false,
-          chips: []
-        });
+        this.content.push(new CellContent(new Date(year, month, day), false, []));
       }
     }
   }

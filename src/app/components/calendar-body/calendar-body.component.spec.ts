@@ -1,10 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CalendarBodyComponent} from './calendar-body.component';
-import {MaterialModule} from '../../material.module';
-import {CalendarComponent} from '../calendar/calendar.component';
-import {CalendarHeaderComponent} from '../calendar-header/calendar-header.component';
+import {MaterialModule} from '../../configuration/material.module';
 import {CalendarBodyCellComponent} from '../calendar-body-cell/calendar-body-cell.component';
-import {CalendarTrailerComponent} from '../calendar-trailer/calendar-trailer.component';
 
 describe('CalendarBodyComponent', () => {
   let component: CalendarBodyComponent;

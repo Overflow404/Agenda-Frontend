@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Config} from '../configuration/Config';
 
 @Injectable()
 export class OverlappingService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   checkIfSlotIsFree(startDate: number, endDate: number) {
-    const url = `http://localhost:8080/Agenda-1.0-SNAPSHOT/rest/agenda/overlapping?startDate=${startDate}&endDate=${endDate}`;
-    return this.http.get(url);
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
+
+    const url = Config.getOverlappingUrl(startDate, endDate);
+    return this.http.get(url, {headers});
   }
 
 }

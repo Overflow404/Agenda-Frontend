@@ -53,6 +53,25 @@ export class DateManager {
     return day > 0 && day <= DateManager.lastDayOfMonth(date).getDate();
   }
 
+  static extractTime(date: Date) {
+    let hour;
+    let minutes;
+
+    if (date.getHours() < 10) {
+      hour = '0' + date.getHours();
+    } else {
+      hour = date.getHours();
+    }
+
+    if (date.getMinutes() < 10) {
+      minutes = '0' + date.getMinutes();
+    } else {
+      minutes = date.getMinutes();
+    }
+
+    return hour + ':' + minutes;
+  }
+
   getWeekDayFromNumber(day: number) {
     return this.weekday[day];
   }

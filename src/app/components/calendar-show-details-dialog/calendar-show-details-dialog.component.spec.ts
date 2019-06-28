@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalendarShowDetailsDialogComponent } from './calendar-show-details-dialog.component';
-import {MaterialModule} from '../../material.module';
+import {MaterialModule} from '../../configuration/material.module';
 
 describe('CalendarShowDetailsDialogComponent', () => {
   let component: CalendarShowDetailsDialogComponent;

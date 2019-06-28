@@ -7,15 +7,14 @@ import {User} from '../model/User';
 import {Config} from '../configuration/Config';
 
 @Injectable()
-export class RegistrationService {
+export class LoginService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  register(user: User) {
+  login(user: User) {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
 
-    const url = Config.getRegisterUrl();
+    const url = Config.getLoginUrl();
     return this.http.post(url, user, {headers});
   }
 

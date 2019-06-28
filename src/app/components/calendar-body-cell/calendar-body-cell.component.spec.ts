@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CalendarBodyCellComponent } from './calendar-body-cell.component';
-import {MaterialModule} from '../../material.module';
+import {MaterialModule} from '../../configuration/material.module';
 
 describe('CalendarBodyCellComponent', () => {
   let component: CalendarBodyCellComponent;

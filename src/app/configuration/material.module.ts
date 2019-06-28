@@ -11,14 +11,14 @@ import {
   MatToolbarModule,
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
-import {RegistrationService} from './service/RegistrationService';
+import {RegistrationService} from '../service/RegistrationService';
 import {HttpClientModule} from '@angular/common/http';
-import {OverlappingService} from './service/OverlappingService';
-import {BookingService} from './service/BookingService';
+import {OverlappingService} from '../service/OverlappingService';
+import {BookingService} from '../service/BookingService';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {CalendarHeaderToBodyCoordinator} from './coordinator/CalendarHeaderToBodyCoordinator';
+import {CalendarHeaderToBodyCoordinator} from '../coordinator/CalendarHeaderToBodyCoordinator';
 
 @NgModule({
   imports: [

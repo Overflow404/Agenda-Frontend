@@ -6,6 +6,7 @@ import {MatSnackBar} from '@angular/material';
 import {BookingService} from '../../service/BookingService';
 import {Booking} from '../../model/Booking';
 import HTTP_STATUS_CODES from 'http-status-enum';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-calendar-body-cell-dialog',
@@ -26,13 +27,13 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     endTime: new FormControl(this.date, [Validators.required, Validators.pattern(this.regex)])
   }, Validators.required);
 
-  private resp: Response;
   private wrongDatesOrder: boolean;
 
   constructor(private dateManager: DateManager,
               private overlappingService: OverlappingService,
               private bookingService: BookingService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private router: Router) {
     this.wrongDatesOrder = false;
   }
 
@@ -53,40 +54,12 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return this.overlapService.checkIfSlotIsFree(date.start, date.end);
   }
 
-  createSlot(startTime, endTime) {
-    const startTimeParts = startTime.split(':');
-    const endTimeParts = endTime.split(':');
-
-    const startDate = new Date(this.date).setHours(startTimeParts[0], startTimeParts[1]);
-    const endDate = new Date(this.date).setHours(endTimeParts[0], endTimeParts[1]);
-
-    return {start: startDate, end: endDate};
-  }
-
   private onViewOverlappingResult() {
     this.getBookingData().subscribe(
-      (res) => { this.onViewBookingResult(res); },
+      () => { this.onViewBookingResult(); },
       error => { this.onViewError(error); }
     );
   }
-
-  private onViewError(error) {
-    switch (error.status) {
-      case HTTP_STATUS_CODES.CONFLICT:
-        this.snackBar.open('This time slot is already booked!', 'X');
-        break;
-      case HTTP_STATUS_CODES.PARTIAL_CONTENT:
-        this.snackBar.open('Empty or null fields!', 'X');
-        break;
-      case HTTP_STATUS_CODES.BAD_REQUEST:
-        this.snackBar.open('End time is greater than start time!', 'X');
-        break;
-      default:
-        this.snackBar.open('Unknown error: ' + error.status, 'X');
-    }
-
-  }
-
 
   getBookingData() {
     const {subject, description, startTime, endTime} = this.bookingForm.value;
@@ -95,8 +68,41 @@ export class CalendarBodyCellDialogComponent implements OnInit {
     return this.bookService.book(this.book);
   }
 
-  private onViewBookingResult(res) {
-      this.snackBar.open('Booking confirmed!', 'X');
+  private onViewBookingResult() {
+    this.snackBar.open('Booking confirmed!', 'X');
+  }
+
+
+  private onViewError(error) {
+    switch (error.status) {
+      case HTTP_STATUS_CODES.PRECONDITION_FAILED:
+        this.snackBar.open(error.error, 'X');
+        break;
+      case HTTP_STATUS_CODES.PARTIAL_CONTENT:
+        this.snackBar.open('Empty or null fields!', 'X');
+        break;
+      case HTTP_STATUS_CODES.BAD_REQUEST:
+        this.snackBar.open('End time is greater than start time!', 'X');
+        break;
+      case HTTP_STATUS_CODES.UNAUTHORIZED:
+        this.snackBar.open('Login please!', 'X');
+        this.router.navigateByUrl('/login');
+        break;
+      default:
+        this.snackBar.open('Unknown error: ' + error.status, 'X');
+    }
+    this.book = undefined;
+
+  }
+
+  createSlot(startTime, endTime) {
+    const startTimeParts = startTime.split(':');
+    const endTimeParts = endTime.split(':');
+
+    const startDate = new Date(this.date).setHours(startTimeParts[0], startTimeParts[1]);
+    const endDate = new Date(this.date).setHours(endTimeParts[0], endTimeParts[1]);
+
+    return {start: startDate, end: endDate};
   }
 
   checkDatesOrder() {
@@ -134,14 +140,6 @@ export class CalendarBodyCellDialogComponent implements OnInit {
 
   get bookService(): BookingService {
     return this.bookingService;
-  }
-
-  get response(): Response {
-    return this.resp;
-  }
-
-  set response(result: Response) {
-    this.resp = result;
   }
 
   get booking() {

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistrationComponent } from './registration.component';
-import {MaterialModule} from '../../material.module';
+import {MaterialModule} from '../../configuration/material.module';
 import {MatFormFieldModule, MatLabel} from '@angular/material';
 
 describe('RegistrationComponent', () => {
