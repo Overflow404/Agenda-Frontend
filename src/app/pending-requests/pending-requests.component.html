@@ -1,0 +1,11 @@
+<mat-toolbar color="warn">
+  <button mat-button (click)="back()">Back</button>
+  <span class="fill-remaining-space"></span>
+  <span>Manage pending requests</span>
+</mat-toolbar>
+
+<mat-selection-list>
+  <mat-list-option (click)="accept(mail)" *ngFor="let mail of mails "
+                   matTooltip="Click to accept this request"> {{mail}}
+  </mat-list-option>
+</mat-selection-list>

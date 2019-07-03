@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {RegistrationService} from '../../service/RegistrationService';
 import {User} from '../../model/User';
 import {MatSnackBar} from '@angular/material';
 import HTTP_STATUS_CODES from 'http-status-enum';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/CalendarToolbarToHomeToolbarCoordinator';
+import {ToolbarService} from '../../service/ToolbarService';
+import {gmtValidator} from '../../validator/GmtValidator';
+
 
 @Component({
   selector: 'app-registration',
@@ -14,30 +16,34 @@ import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/Calenda
   styleUrls: ['./registration.component.css']
 })
 
+
 export class RegistrationComponent implements OnInit {
+
   registrationForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
-    gmt: new FormControl('', Validators.required),
+    gmt: new FormControl('', [Validators.compose([Validators.required, gmtValidator])]),
     group: new FormControl(''),
-    owner: new FormControl(false)});
+    owner: new FormControl(false)
+  });
 
   constructor(private registrationService: RegistrationService,
               private snackBar: MatSnackBar,
               private router: Router,
               private jwtHelper: JwtHelperService,
-              private status: CalendarToolbarToHomeToolbarCoordinator) { }
+              private toolbar: ToolbarService) {
+  }
 
   ngOnInit() {
+    this.toolbar.show();
     const token = localStorage.getItem('jwt');
     if (token !== null) {
       if (!this.jwtHelper.isTokenExpired(token)) {
         this.router.navigateByUrl('/calendar');
       }
     }
-    this.status.changeStatus(false);
   }
 
   onFormSubmit() {
@@ -45,7 +51,7 @@ export class RegistrationComponent implements OnInit {
     const user = new User(firstName, lastName, email, password, gmt, group, owner);
     this.registrationService.register(user).subscribe(
       () => this.onRegistrationResult(),
-        error => this.OnViewError(error));
+      error => this.OnViewError(error));
   }
 
   private onRegistrationResult() {
@@ -70,4 +76,6 @@ export class RegistrationComponent implements OnInit {
         break;
     }
   }
+
+
 }

@@ -2,6 +2,12 @@
   <button mat-button (click)="previousMonth()">Previous</button>
   <button mat-button (click)="nextMonth()">Next</button>
   <span class="fill-remaining-space"></span>
+  <p>
+    <button class="badge" mat-button matBadge="{{coordinator.notifications}}" matBadgePosition="after"
+            matBadgeColor="primary" (click)="onViewPendingRequest()">
+      Pending requests
+    </button>
+  </p>
   <span>
     {{ (dateManager.getMonthName(date.getMonth())) + ', ' + date.getFullYear() }}</span>
 </mat-toolbar>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/CalendarToolbarToHomeToolbarCoordinator';
+import {ToolbarService} from '../../service/ToolbarService';
 
 @Component({
   selector: 'app-calendar-trailer',
@@ -9,14 +9,14 @@ import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/Calenda
 })
 export class CalendarTrailerComponent implements OnInit {
 
-  constructor(private status: CalendarToolbarToHomeToolbarCoordinator,
-              private router: Router) { }
+  constructor(private router: Router,
+              private toolbar: ToolbarService) { }
 
   ngOnInit() {
   }
 
   logout() {
-    /*this.status.changeStatus(false);*/
+    this.toolbar.show();
     localStorage.removeItem('jwt');
     this.router.navigateByUrl('/login');
   }

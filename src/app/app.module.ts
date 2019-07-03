@@ -8,14 +8,14 @@ import {CalendarBodyComponent} from './components/calendar-body/calendar-body.co
 import {CalendarTrailerComponent} from './components/calendar-trailer/calendar-trailer.component';
 import {CalendarBodyCellComponent} from './components/calendar-body-cell/calendar-body-cell.component';
 import {
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS, MatBadgeModule,
   MatButtonModule,
-  MatCardModule, MatCheckboxModule, MatChipList, MatChipsModule,
+  MatCardModule, MatCheckboxModule, MatChipsModule,
   MatDialogModule,
   MatGridListModule,
-  MatInputModule, MatLabel, MatListModule,
-  MatSlideToggleModule, MatSnackBar, MatSnackBarContainer, MatSnackBarModule,
-  MatToolbarModule
+  MatInputModule, MatListModule,
+  MatSlideToggleModule, MatSnackBar, MatSnackBarModule,
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material/';
 import {CalendarHeaderToBodyCoordinator} from './coordinator/CalendarHeaderToBodyCoordinator';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -34,8 +34,10 @@ import {LoginComponent} from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import {RegistrationService} from './service/RegistrationService';
 import {LoginService} from './service/LoginService';
-import {JWT_OPTIONS, JwtHelperService, JwtModule} from '@auth0/angular-jwt';
-import {CalendarToolbarToHomeToolbarCoordinator} from './coordinator/CalendarToolbarToHomeToolbarCoordinator';
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
+import {ToolbarService} from './service/ToolbarService';
+import { PendingRequestsComponent } from './pending-requests/pending-requests.component';
+import {PendingService} from './service/PendingService';
 
 @NgModule({
   declarations: [
@@ -51,12 +53,14 @@ import {CalendarToolbarToHomeToolbarCoordinator} from './coordinator/CalendarToo
     HomeComponent,
     LoginComponent,
     HomeComponent,
+    PendingRequestsComponent,
   ],
   imports: [
     RouterModule.forRoot([
-      {path: '', redirectTo: '/', pathMatch: 'full'},
+      {path: '', redirectTo: 'login', pathMatch: 'full'},
       {path: 'calendar', component: CalendarComponent},
       {path: 'register', component: RegistrationComponent},
+      {path: 'pending', component: PendingRequestsComponent},
       {path: 'login', component: LoginComponent}]),
     BrowserModule,
     MatButtonModule,
@@ -77,6 +81,8 @@ import {CalendarToolbarToHomeToolbarCoordinator} from './coordinator/CalendarToo
     MatListModule,
     RouterModule,
     MatCheckboxModule,
+    MatBadgeModule,
+    MatTooltipModule,
 
   ],
   entryComponents: [
@@ -85,7 +91,7 @@ import {CalendarToolbarToHomeToolbarCoordinator} from './coordinator/CalendarToo
   ],
   providers: [CalendarHeaderToBodyCoordinator, OverlappingService, MatSnackBar, Overlay, RegistrationService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}, BookingService, LoginService, JwtHelperService,
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, CalendarToolbarToHomeToolbarCoordinator],
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, ToolbarService, PendingService],
   bootstrap: [AppComponent]
 })
 

@@ -6,7 +6,7 @@ import {LoginService} from '../../service/LoginService';
 import HTTP_STATUS_CODES from 'http-status-enum';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/CalendarToolbarToHomeToolbarCoordinator';
+import {ToolbarService} from '../../service/ToolbarService';
 
 @Component({
   selector: 'app-login',
@@ -16,16 +16,17 @@ import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/Calenda
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)});
 
   constructor(private loginService: LoginService,
               private snackBar: MatSnackBar,
               private router: Router,
               private jwtHelper: JwtHelperService,
-              private status: CalendarToolbarToHomeToolbarCoordinator) { }
+              private toolbar: ToolbarService) { }
 
   ngOnInit() {
+    this.toolbar.show();
     const token = localStorage.getItem('jwt');
     if (token !== null) {
       if (!this.jwtHelper.isTokenExpired(token)) {
@@ -33,7 +34,6 @@ export class LoginComponent implements OnInit {
       } else {
       }
     }
-    /*this.status.changeStatus(true);*/
   }
 
   onFormSubmit() {
@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/calendar');
     localStorage.setItem('jwt', res.jwt);
     localStorage.setItem('group', res.group);
+    localStorage.setItem('user', res.user);
+    this.toolbar.hide();
   }
 
   private OnViewError(error) {

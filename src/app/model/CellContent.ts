@@ -16,4 +16,7 @@ export class CellContent {
     this.chips.push(booking);
   }
 
+  clear() {
+    this.chips = [];
+  }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/CalendarToolbarToHomeToolbarCoordinator';
+import {ToolbarService} from '../../service/ToolbarService';
+
+
 
 @Component({
   selector: 'app-home',
@@ -8,10 +10,10 @@ import {CalendarToolbarToHomeToolbarCoordinator} from '../../coordinator/Calenda
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private status: CalendarToolbarToHomeToolbarCoordinator) { }
+  constructor(public toolbar: ToolbarService) { }
 
   ngOnInit() {
-    /*this.status.changeStatus(false);*/
+    this.toolbar.show();
   }
 
 }

@@ -28,6 +28,10 @@ export class CalendarBodyCellComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateBookings();
+  }
+
+  updateBookings() {
     this.getBookingsForCurrentDay().subscribe(
       result => {
         this.onViewResult(result);
@@ -43,10 +47,9 @@ export class CalendarBodyCellComponent implements OnInit {
   }
 
   private onViewResult(result: Booking[]) {
+    this.cellContent.clear();
     result.forEach(booking => {
-      if (booking !== undefined) {
         this.cellContent.addChip(booking);
-      }
     });
 
   }
@@ -54,7 +57,6 @@ export class CalendarBodyCellComponent implements OnInit {
   private onViewError(error) {
     switch (error.status) {
       case HTTP_STATUS_CODES.UNAUTHORIZED:
-        this.snackBar.open('Login please!', 'X');
         this.router.navigateByUrl('/login');
         break;
       case HTTP_STATUS_CODES.PRECONDITION_FAILED:
@@ -62,6 +64,7 @@ export class CalendarBodyCellComponent implements OnInit {
         break;
       default:
         this.snackBar.open('Unknown error: ' + error.status, 'X');
+        break;
     }
   }
 
@@ -70,7 +73,7 @@ export class CalendarBodyCellComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.date = this.date;
     dialogRef.afterClosed().subscribe(() => {
-      this.onViewResult([instance.booking]);
+      this.updateBookings();
     });
   }
 

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DateManager} from '../../date/DateManager';
 import {CalendarHeaderToBodyCoordinator} from '../../coordinator/CalendarHeaderToBodyCoordinator';
 import {CellContent} from '../../model/CellContent';
+import {PendingService} from '../../service/PendingService';
 
 @Component({
   selector: 'app-calendar-body',
@@ -14,11 +15,13 @@ export class CalendarBodyComponent implements OnInit {
   @Input() private columns: number;
   private content: CellContent[];
 
-  constructor(private coordinator: CalendarHeaderToBodyCoordinator) {
+  constructor(private coordinator: CalendarHeaderToBodyCoordinator,
+              private pendingService: PendingService) {
   }
 
   ngOnInit() {
     this.onMonthChange();
+    this.retrieveNotifications();
   }
 
   private onMonthChange() {
@@ -64,5 +67,21 @@ export class CalendarBodyComponent implements OnInit {
 
   set date(value: Date) {
     this.currentDate = value;
+  }
+
+  private retrieveNotifications() {
+    const user = localStorage.getItem('user');
+    const mail = JSON.parse(user).email;
+    this.pendingService.numberOfPendings(mail).subscribe(
+      (res: number) => this.onViewResult(res),
+      error => this.OnViewError(error));
+  }
+
+  private onViewResult(res: number) {
+    this.coordinator.setNumberOfNotifications(res);
+  }
+
+  private OnViewError(error: any) {
+
   }
 }

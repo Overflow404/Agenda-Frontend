@@ -47,3 +47,15 @@ p {
   from { opacity: 1; }
   to   { opacity: 0; display: none; }
 }
+
+::ng-deep.mat-pseudo-checkbox{
+  display: none !important;
+}
+
+mat-selection-list  {
+  height: 70%;
+  width: 100%;
+  right: 0;
+  overflow: auto;
+  top: 50px;
+}

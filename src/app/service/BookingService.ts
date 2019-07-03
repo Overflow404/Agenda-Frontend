@@ -11,7 +11,9 @@ export class BookingService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
 
-    const url = Config.getBookingUrl(booking);
+    const email = JSON.parse(localStorage.getItem('user')).email;
+    const url = Config.getBookingUrl(booking, email);
+
     return this.http.get(url, {headers});
   }
 
@@ -19,7 +21,9 @@ export class BookingService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
 
-    const url = Config.getRetrieveBookingsUrl(date);
+    const email = JSON.parse(localStorage.getItem('user')).email;
+    const url = Config.getRetrieveBookingsUrl(date, email);
+
     return this.http.get<Booking[]>(url, {headers});
   }
 
